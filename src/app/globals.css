@@ -1,26 +1,185 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f5f4f0;
+  --paper-subtle: #eceae4;
+  --paper-pure: #faf9f6;
+
+  --ink: #0d0d0d;
+  --ink-soft: #1a1a19;
+  --stone: #73726c;
+  --stone-light: #a6a59e;
+
+  --hairline-dark: rgba(13, 13, 13, 0.11);
+  --hairline-light: rgba(245, 244, 240, 0.14);
+
+  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart-snap: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-subtle: var(--paper-subtle);
+  --color-paper-pure: var(--paper-pure);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-stone: var(--stone);
+  --color-stone-light: var(--stone-light);
+
+  --font-sans: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background-color: var(--paper);
+  color: var(--ink);
+  color-scheme: light;
+  scroll-behavior: auto;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Editorial Typographic Scale (Quiet Luxury × Swiss Print) */
+.font-editorial-serif {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+}
+
+.display-monument {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(3.75rem, 13.5vw, 13rem);
+  font-weight: 600;
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+}
+
+.display-statement {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(2rem, 4.8vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.display-index {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(1.85rem, 4.4vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.display-finale {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(2.75rem, 8.2vw, 7.5rem);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+}
+
+/* Precision 1px Architectural Hairlines */
+.hairline-b-dark {
+  border-bottom: 1px solid var(--hairline-dark);
+}
+
+.hairline-t-dark {
+  border-top: 1px solid var(--hairline-dark);
+}
+
+.hairline-b-light {
+  border-bottom: 1px solid var(--hairline-light);
+}
+
+.hairline-t-light {
+  border-top: 1px solid var(--hairline-light);
+}
+
+/* Motion Design Helpers */
+.ease-expo-out {
+  transition-timing-function: var(--ease-expo-out);
+}
+
+.ease-quart-snap {
+  transition-timing-function: var(--ease-quart-snap);
+}
+
+/* Quiet After Effects vertical trim-drop cue for Scene 1 Scroll thread */
+@keyframes paper-scroll-thread {
+  0% {
+    transform: translate3d(0, -100%, 0);
+  }
+
+  55% {
+    transform: translate3d(0, 210%, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 210%, 0);
+  }
+}
+
+.paper-scroll-thread {
+  animation: paper-scroll-thread 2.2s var(--ease-quart-snap) infinite;
+}
+
+/* Clean Monochrome Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(13, 13, 13, 0.24);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(13, 13, 13, 0.55);
+}
+
+::selection {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+/* Minimalist Morphing Dot Cursor (Desktop fine pointers only) */
+@media (hover: hover) and (pointer: fine) {
+
+  html.has-minimal-cursor,
+  html.has-minimal-cursor body,
+  html.has-minimal-cursor a,
+  html.has-minimal-cursor button,
+  html.has-minimal-cursor [role="button"] {
+    cursor: none !important;
+  }
+
+  html.has-minimal-cursor input,
+  html.has-minimal-cursor textarea,
+  html.has-minimal-cursor select {
+    cursor: text !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

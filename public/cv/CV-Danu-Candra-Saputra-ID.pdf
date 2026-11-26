@@ -1,0 +1,125 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 5275 >>
+stream
+0.024 0.027 0.043 rg
+0 742 595.28 100 re f
+0.776 1.0 0.0 rg
+0 738 595.28 4 re f
+0.973 0.980 0.988 rg
+BT /F2 20 Tf 44 804 Td (DANU CANDRA SAPUTRA) Tj ET
+0.776 1.0 0.0 rg
+BT /F2 11 Tf 44 784 Td (FULLSTACK WEB DEVELOPER  |  DEVOPS & INFRASTRUKTUR PRODUKSI) Tj ET
+0.796 0.835 0.882 rg
+BT /F1 8.5 Tf 44 768 Td (Email: danucandra100@gmail.com  |  GitHub: github.com/DanuCandra  |  LinkedIn: linkedin.com/in/danu-candra) Tj ET
+0.310 0.275 0.898 rg
+BT /F2 10 Tf 44 708 Td (RINGKASAN PROFIL) Tj ET
+0.85 0.87 0.92 RG 0.6 w
+44 704 m 551 704 l S
+0.18 0.22 0.30 rg
+BT /F1 8.8 Tf 44 692 Td (Fullstack Web Developer yang merancang dan membangun aplikasi web end-to-end dari antarmuka interaktif hingga) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.8 Tf 44 680 Td (server produksi. Berpengalaman dengan Next.js, React, Vue.js, Laravel, REST API, PostgreSQL/MySQL, Docker, CI/CD,) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.8 Tf 44 668 Td (Linux VPS, Proxmox VE, dan MikroTik RouterOS untuk membangun sistem yang cepat, aman, dan siap skala nyata.) Tj ET
+0.310 0.275 0.898 rg
+BT /F2 10 Tf 44 648 Td (PENGALAMAN KERJA & REKAYASA) Tj ET
+0.85 0.87 0.92 RG 0.6 w
+44 644 m 551 644 l S
+0.067 0.078 0.141 rg
+BT /F2 9.5 Tf 44 632 Td (Asisten Laboratorium - Universitas PGRI Semarang) Tj ET
+0.39 0.40 0.95 rg
+BT /F1 8.5 Tf 430 632 Td (Des 2023 - Agu 2026) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 619.5 Td (- Menangani troubleshooting komputer, perangkat lunak, dan jaringan agar perangkat laboratorium siap pakai.) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 607.7 Td (- Mendampingi praktikum serta membimbing mahasiswa dalam penggunaan software dan pemecahan kendala teknis.) Tj ET
+0.067 0.078 0.141 rg
+BT /F2 9.5 Tf 44 591.9000000000001 Td (Full-Stack Web Developer - Freelance / Independent) Tj ET
+0.39 0.40 0.95 rg
+BT /F1 8.5 Tf 430 591.9000000000001 Td (Des 2023 - Mar 2026) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 579.4000000000001 Td (- Mengembangkan dan melakukan deployment aplikasi web end-to-end \(Laravel, MySQL, REST API, frontend modern\).) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 567.6000000000001 Td (- Mengimplementasikan autentikasi, otorisasi RBAC, relasi database kompleks, business logic, & Payment Gateway.) Tj ET
+0.067 0.078 0.141 rg
+BT /F2 9.5 Tf 44 551.8000000000002 Td (Web Developer Intern - PT Mitra Aplikasi Teknologi) Tj ET
+0.39 0.40 0.95 rg
+BT /F1 8.5 Tf 430 551.8000000000002 Td (Jan 2025 - Apr 2025) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 539.3000000000002 Td (- Mengembangkan aplikasi CRM perusahaan menggunakan Laravel, Eloquent ORM, Blade, dan MySQL.) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 527.5000000000002 Td (- Melakukan software testing, debugging, validasi fitur, serta kolaborasi pengelolaan source code menggunakan Git.) Tj ET
+0.310 0.275 0.898 rg
+BT /F2 10 Tf 44 507.7000000000003 Td (PENDIDIKAN) Tj ET
+0.85 0.87 0.92 RG 0.6 w
+44 503.7000000000003 m 551 503.7000000000003 l S
+0.067 0.078 0.141 rg
+BT /F2 9.5 Tf 44 491.7000000000003 Td (Universitas PGRI Semarang - S1 Informatika) Tj ET
+0.39 0.40 0.95 rg
+BT /F1 8.5 Tf 430 491.7000000000003 Td (IPK: 3.84 / 4.00) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.8 Tf 44 479.2000000000003 Td (Fokus: Rekayasa Perangkat Lunak, Sistem Informasi, DevOps CI/CD, dan Keamanan Jaringan.) Tj ET
+0.310 0.275 0.898 rg
+BT /F2 10 Tf 44 459.2000000000003 Td (KEAHLIAN TEKNIS) Tj ET
+0.85 0.87 0.92 RG 0.6 w
+44 455.2000000000003 m 551 455.2000000000003 l S
+0.18 0.22 0.30 rg
+BT /F1 8.8 Tf 44 443.2000000000003 Td (Frontend: Next.js, React, Vue.js, TypeScript, JavaScript, Tailwind CSS, Blade, Three.js / WebGL) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.8 Tf 44 431.2000000000003 Td (Backend & DB: PHP, Laravel, Eloquent ORM, REST API, Payment Gateway, PostgreSQL, MySQL, MariaDB) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.8 Tf 44 419.2000000000003 Td (DevOps & Infra: Linux Ubuntu Server, Docker, Docker Compose, CI/CD, VPS Deployment, Proxmox VE, MikroTik) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.8 Tf 44 407.2000000000003 Td (Workflow & AI: Git, GitHub, Composer, NPM, AI Agent Setup, Custom Skills & Engineering Automation) Tj ET
+0.310 0.275 0.898 rg
+BT /F2 10 Tf 44 387.2000000000003 Td (SERTIFIKASI KOMPETENSI) Tj ET
+0.85 0.87 0.92 RG 0.6 w
+44 383.2000000000003 m 551 383.2000000000003 l S
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 371.2000000000003 Td (- Junior Web Programmer - LSP Universitas PGRI Semarang \(2026\)) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 359.40000000000026 Td (- Belajar Dasar-Dasar DevOps - Dicoding Indonesia \(2023\)) Tj ET
+0.310 0.275 0.898 rg
+BT /F2 10 Tf 44 339.60000000000025 Td (PUBLIKASI ILMIAH PILIHAN) Tj ET
+0.85 0.87 0.92 RG 0.6 w
+44 335.60000000000025 m 551 335.60000000000025 l S
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 323.60000000000025 Td (- [2026] Real-Time Multi-Class DoS Attack Detection on Proxmox VMs Using LightGBM with MikroTik - SJI \(UNNES\)) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 311.80000000000024 Td (- [2025] Implementasi CI/CD Aplikasi CRM Berbasis Web Menggunakan Laravel Di PT Mitra Aplikasi Teknologi - UPGRIS) Tj ET
+0.18 0.22 0.30 rg
+BT /F1 8.6 Tf 54 300.0000000000002 Td (- [2024] Sistem Informasi Geografis Tindak Kriminal Di Jawa Tengah Tahun 2019-2021 - Jurnal Scientica) Tj ET
+0.45 0.50 0.58 rg
+BT /F1 7.5 Tf 44 28 Td (Generated from danucs.com verified public profile | No sensitive phone or home address included) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000257 00000 n 
+0000000327 00000 n 
+0000000402 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+5729
+%%EOF
