@@ -8,6 +8,10 @@ export const OG_IMAGE_SIZE = {
   height: 630,
 };
 
+/**
+ * Editorial Monochrome OpenGraph Poster (1200×630 PNG) mirroring Scene 1 (`DANU / 1px / CANDRA`).
+ * 100% offline-safe & privacy-safe (zero phone, address, school, or GPA).
+ */
 export function renderPortfolioOgImage(locale: Locale) {
   const domainText = siteConfig.url.replace(/^https?:\/\//, "");
 
@@ -20,53 +24,108 @@ export function renderPortfolioOgImage(locale: Locale) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "64px 72px",
+          padding: "56px 72px",
           backgroundColor: "#F5F4F0",
           color: "#0D0D0D",
           fontFamily: "sans-serif",
         }}
       >
+        {/* Top Editorial Navigation Echo */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
             fontSize: "20px",
-            color: "#73726C",
           }}
         >
-          <span>{profileData.brandHandle}.</span>
-          <span>{locale.toUpperCase()}</span>
+          <span style={{ fontWeight: 600, letterSpacing: "-0.02em" }}>
+            {profileData.brandHandle}.
+          </span>
+          <span
+            style={{
+              fontSize: "15px",
+              letterSpacing: "0.18em",
+              color: "#73726C",
+            }}
+          >
+            PORTFOLIO · {locale.toUpperCase()}
+          </span>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+        {/* Center Monumental Split Composition (DANU / 1px / CANDRA) */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+          }}
+        >
           <div
             style={{
-              fontSize: "84px",
-              fontWeight: 700,
-              letterSpacing: "-0.04em",
-              lineHeight: 1,
+              fontSize: "112px",
+              fontWeight: 600,
+              letterSpacing: "-0.05em",
+              lineHeight: 0.92,
               display: "flex",
             }}
           >
-            {profileData.fullName}
+            {profileData.firstName.toUpperCase()}
           </div>
-          <div style={{ fontSize: "28px", color: "#73726C", display: "flex" }}>
+
+          <div
+            style={{
+              width: "100%",
+              height: "1px",
+              backgroundColor: "rgba(13, 13, 13, 0.16)",
+              marginTop: "22px",
+              marginBottom: "22px",
+              display: "flex",
+            }}
+          />
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              fontSize: "112px",
+              fontWeight: 600,
+              letterSpacing: "-0.05em",
+              lineHeight: 0.92,
+            }}
+          >
+            {profileData.lastName.toUpperCase()}
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "18px",
+              fontSize: "28px",
+              fontStyle: "italic",
+              color: "#73726C",
+              fontFamily: "Georgia, serif",
+            }}
+          >
             {profileData.role[locale]}
           </div>
         </div>
 
+        {/* Quiet 1-Row Footer */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-            borderTop: "1px solid rgba(13,13,13,0.14)",
-            paddingTop: "24px",
-            fontSize: "18px",
+            alignItems: "center",
+            borderTop: "1px solid rgba(13, 13, 13, 0.12)",
+            paddingTop: "20px",
+            fontSize: "16px",
             color: "#73726C",
           }}
         >
           <span>{domainText}</span>
-          <span>{profileData.email}</span>
+          <span>{profileData.disciplines.join(" · ")}</span>
         </div>
       </div>
     ),

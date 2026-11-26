@@ -46,7 +46,8 @@ export function HeroPortalChoreography({ locale }: { locale: Locale }) {
 
     const syncScale = () => {
       const w = window.innerWidth;
-      const scale = w >= 1280 ? 1.04 : w >= 768 ? 0.88 : 0.64;
+      const scale =
+        w >= 1280 ? 1.04 : w >= 768 ? 0.88 : w >= 640 ? 0.72 : 0.56;
       updatePortalState({ enabled: true, responsiveScale: scale });
     };
 

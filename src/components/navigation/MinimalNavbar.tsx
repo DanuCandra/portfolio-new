@@ -31,7 +31,7 @@ const getServerNavSurface = (): SurfaceMode => "paper";
 export function MinimalNavbar({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   const pathname = usePathname();
-  const { navigateWithCurtain } = usePageTransition();
+  const { navigateWithCurtain, scrollWithCurtain } = usePageTransition();
 
   const navSurface = useSyncExternalStore(
     subscribeSurfaceMode,
@@ -55,23 +55,13 @@ export function MinimalNavbar({ locale }: { locale: Locale }) {
     return () => cancelAnimationFrame(rafId);
   }, []);
 
-  const handleAnchorScroll = (selector: string) => {
+  const handleAnchorScroll = (selector: string, label: string) => {
     if (!isHomeRoute) {
-      navigateWithCurtain(
-        `${localePath(locale, "/")}${selector}`,
-        profileData.fullName
-      );
+      navigateWithCurtain(`${localePath(locale, "/")}${selector}`, label);
       return;
     }
 
-    const target = document.querySelector(selector);
-    if (target instanceof HTMLElement) {
-      if (window.__danucsLenis) {
-        window.__danucsLenis.scrollTo(target, { duration: 1.25 });
-      } else {
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-    }
+    scrollWithCurtain(selector, label);
   };
 
   const altLocale: Locale = locale === "id" ? "en" : "id";
@@ -124,9 +114,9 @@ export function MinimalNavbar({ locale }: { locale: Locale }) {
             <MagneticField strength={0.2}>
               <button
                 type="button"
-                onClick={() => handleAnchorScroll("#work")}
+                onClick={() => handleAnchorScroll("#work", dict.work.heading)}
                 data-cursor="pointer"
-                className="group cursor-pointer font-normal"
+                className="group cursor-pointer font-normal transition-transform active:scale-95"
               >
                 <RollingText
                   text={dict.nav.work}
@@ -138,9 +128,9 @@ export function MinimalNavbar({ locale }: { locale: Locale }) {
             <MagneticField strength={0.2}>
               <button
                 type="button"
-                onClick={() => handleAnchorScroll("#contact")}
+                onClick={() => handleAnchorScroll("#contact", dict.nav.contact)}
                 data-cursor="pointer"
-                className="group cursor-pointer font-normal"
+                className="group cursor-pointer font-normal transition-transform active:scale-95"
               >
                 <RollingText
                   text={dict.nav.contact}

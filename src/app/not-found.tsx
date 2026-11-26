@@ -1,18 +1,25 @@
-import Link from "next/link";
+import { TransitionLink } from "@/components/motion/PageTransitionProvider";
+import { RollingText } from "@/components/motion/RollingText";
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-[#F5F4F0] px-6 text-center text-[#0D0D0D]">
-      <p className="text-xs tracking-[0.2em] text-[#73726C] uppercase">404</p>
-      <h1 className="mt-3 text-3xl font-medium tracking-tight sm:text-5xl">
+    <main
+      data-surface="paper"
+      className="flex min-h-screen flex-col items-center justify-center bg-[#F5F4F0] px-6 text-center text-[#0D0D0D]"
+    >
+      <p className="font-mono text-[11px] tracking-[0.22em] text-[#73726C] uppercase">
+        404
+      </p>
+      <h1 className="mt-4 font-editorial-serif text-5xl italic tracking-tight sm:text-6xl">
         Page not found.
       </h1>
-      <Link
+      <TransitionLink
         href="/"
-        className="mt-8 border-b border-[#0D0D0D] pb-1 text-sm text-[#0D0D0D] transition-opacity hover:opacity-60"
+        curtainLabel="Danu Candra"
+        className="group mt-10 border-b border-[#0D0D0D]/40 pb-1 text-sm text-[#0D0D0D] transition-colors hover:border-[#0D0D0D]"
       >
-        Return home
-      </Link>
+        <RollingText text="Return home" italicClassName="text-base" />
+      </TransitionLink>
     </main>
   );
 }
