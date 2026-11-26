@@ -4,6 +4,9 @@ import { useEffect, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import {
+  motionState,
+  queuePendingHash,
+  queuePreserveScroll,
   setReducedMotionFlag,
   setSurfaceModes,
   stepSmoothVelocity,
@@ -153,9 +156,61 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  // Reset scroll cleanly on route navigation
+  // Context-aware scroll reconciliation on route change:
+  // 1) In-place ID <-> EN switch -> restore exact scrollY without jumping
+  // 2) Cross-route hash jump (#work / #contact) -> land cleanly on anchor behind shutter
+  // 3) Standard route change -> reset cleanly to top
   useEffect(() => {
+    const syncSurfaceNow = () => {
+      const limit = Math.max(
+        document.documentElement.scrollHeight - window.innerHeight,
+        1
+      );
+      const y = window.__danucsLenis ? window.__danucsLenis.scroll : window.scrollY;
+      updateScrollTelemetry(y, Math.min(Math.max(y / limit, 0), 1), 0);
+      const bodySurface = detectSurfaceAtY((window.innerHeight || 1) * 0.5);
+      const navSurface = detectSurfaceAtY(44);
+      setSurfaceModes(bodySurface, navSurface);
+    };
+
     const lenis = window.__danucsLenis;
+    const preservedY = motionState.preserveScrollY;
+    const pendingHash = motionState.pendingHash;
+
+    if (preservedY !== null) {
+      queuePreserveScroll(null);
+      requestAnimationFrame(() => {
+        if (lenis) {
+          lenis.resize();
+          lenis.scrollTo(preservedY, { immediate: true });
+        } else {
+          window.scrollTo(0, preservedY);
+        }
+        requestAnimationFrame(syncSurfaceNow);
+      });
+      return;
+    }
+
+    if (pendingHash) {
+      queuePendingHash(null);
+      requestAnimationFrame(() => {
+        const targetEl = document.querySelector(pendingHash);
+        if (targetEl instanceof HTMLElement) {
+          if (lenis) {
+            lenis.resize();
+            lenis.scrollTo(targetEl, { immediate: true });
+          } else {
+            targetEl.scrollIntoView({ behavior: "auto" });
+          }
+        } else if (lenis) {
+          lenis.resize();
+          lenis.scrollTo(0, { immediate: true });
+        }
+        requestAnimationFrame(syncSurfaceNow);
+      });
+      return;
+    }
+
     if (lenis) {
       lenis.resize();
       lenis.scrollTo(0, { immediate: true });

@@ -5,44 +5,52 @@ import { cn } from "@/lib/cn";
 interface RollingTextProps {
   text: string;
   className?: string;
-  italicClassName?: string;
+  /** Optional class override for the incoming same-font kinetic layer */
+  hoverClassName?: string;
   /** Set true when driven by an ancestor Tailwind `.group` hover */
   groupHover?: boolean;
+  /** Enable razor-thin directional 1px hairline sweep (enters left, exits right) */
+  underline?: boolean;
 }
 
 /**
- * Dual-Layer Slot-Roll Typography (Motion Design Primitive).
- * Saat di-hover, teks sans meluncur naik keluar mask sementara versi
- * *Instrument Serif Italic* masuk mulus dari bawah dengan kurva `--ease-expo-out`.
+ * Pure Same-Font Kinetic Slot-Roll Typography (Motion Design Primitive).
+ * - Tetap menggunakan font tajam yang sama persis (nol perubahan ke *italic*),
+ *   sehingga terasa tegas, presisi, dan konsisten di seluruh tombol & navigasi.
+ * - Opsional `underline` menambahkan sapuan garis `1px` direksional (masuk kiri → keluar kanan).
  */
 export function RollingText({
   text,
   className,
-  italicClassName,
+  hoverClassName,
   groupHover = true,
+  underline = false,
 }: RollingTextProps) {
   return (
     <span
       className={cn(
-        "relative inline-block overflow-hidden align-top leading-[1.15]",
+        "relative inline-block align-top leading-[1.18]",
         !groupHover && "group",
+        underline && "hairline-sweep",
         className
       )}
     >
-      {/* Resting Sans Layer */}
-      <span className="block transition-transform duration-500 ease-expo-out will-change-transform group-hover:-translate-y-[112%]">
-        {text}
-      </span>
+      <span className="relative block overflow-hidden">
+        {/* Resting Layer */}
+        <span className="block transition-[transform,opacity] duration-[460ms] ease-spring-out will-change-transform group-hover:-translate-y-[115%] group-hover:opacity-45">
+          {text}
+        </span>
 
-      {/* Revealed Editorial Serif Italic Layer */}
-      <span
-        aria-hidden="true"
-        className={cn(
-          "font-editorial-serif absolute inset-0 block translate-y-[112%] italic font-normal transition-transform duration-500 ease-expo-out will-change-transform group-hover:translate-y-0",
-          italicClassName
-        )}
-      >
-        {text}
+        {/* Incoming Same-Font Precision Layer */}
+        <span
+          aria-hidden="true"
+          className={cn(
+            "absolute inset-0 block translate-y-[115%] opacity-45 transition-[transform,opacity] duration-[460ms] ease-spring-out will-change-transform group-hover:translate-y-0 group-hover:opacity-100",
+            hoverClassName
+          )}
+        >
+          {text}
+        </span>
       </span>
     </span>
   );

@@ -51,12 +51,15 @@ export const metadata: Metadata = {
   category: "technology",
   keywords: [
     "Danu Candra Saputra",
+    "Danu Candra",
     "danucs",
     "danucs.com",
+    "Full-Stack Web Developer",
     "Fullstack Web Developer",
+    "Laravel Developer",
     "Next.js Developer",
     "React Developer",
-    "Laravel Developer",
+    "Vue.js Developer",
     "Web Developer Indonesia",
   ],
   alternates: {

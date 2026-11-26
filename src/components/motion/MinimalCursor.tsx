@@ -36,19 +36,13 @@ export function MinimalCursor() {
 
     document.documentElement.classList.add("has-minimal-cursor");
 
-    const onMove = (e: PointerEvent) => {
-      targetRef.current.x = e.clientX;
-      targetRef.current.y = e.clientY;
-      if (!visibleRef.current) {
-        posRef.current.x = e.clientX;
-        posRef.current.y = e.clientY;
-        visibleRef.current = true;
-        setEnabled(true);
-        setVisible(true);
+    const evaluateUnderPointer = (x: number, y: number) => {
+      const target = document.elementFromPoint(x, y) as HTMLElement | null;
+      if (!target) {
+        setKind("default");
+        setLabel("");
+        return;
       }
-
-      const target = e.target as HTMLElement | null;
-      if (!target) return;
 
       if (target.closest("input, textarea, select")) {
         setKind("hidden");
@@ -72,12 +66,33 @@ export function MinimalCursor() {
       setLabel("");
     };
 
+    const onMove = (e: PointerEvent) => {
+      targetRef.current.x = e.clientX;
+      targetRef.current.y = e.clientY;
+      if (!visibleRef.current) {
+        posRef.current.x = e.clientX;
+        posRef.current.y = e.clientY;
+        visibleRef.current = true;
+        setEnabled(true);
+        setVisible(true);
+      }
+
+      evaluateUnderPointer(e.clientX, e.clientY);
+    };
+
+    // Re-evaluate hovered element on scroll so pills ("Salin" / "Lihat") never stay stranded mid-screen!
+    const onScroll = () => {
+      if (!visibleRef.current) return;
+      evaluateUnderPointer(targetRef.current.x, targetRef.current.y);
+    };
+
     const onLeave = () => {
       visibleRef.current = false;
       setVisible(false);
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("mouseleave", onLeave);
 
     let rafId = 0;
@@ -102,6 +117,7 @@ export function MinimalCursor() {
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseleave", onLeave);
       document.documentElement.classList.remove("has-minimal-cursor");
     };

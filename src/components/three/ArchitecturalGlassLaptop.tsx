@@ -116,13 +116,123 @@ interface KeycapPlacement {
   z: number;
   w: number;
   d: number;
+  label: string;
+  secondary?: string;
+  isTouchId?: boolean;
+  isModifier?: boolean;
+  align?: "left" | "right" | "center";
 }
+
+const KEY_DECK_W = 2.74;
+const KEY_START_Z = -0.82;
+const KEY_ROW_GAP = 0.172;
+const KEY_DECK_Z_MIN = KEY_START_Z - 0.132 * 0.5;
+const KEY_DECK_Z_MAX = KEY_START_Z + 5 * KEY_ROW_GAP + 0.144 * 0.5;
+const KEY_DECK_D = KEY_DECK_Z_MAX - KEY_DECK_Z_MIN;
+const KEY_DECK_CENTER_Z = (KEY_DECK_Z_MIN + KEY_DECK_Z_MAX) * 0.5;
+
+const MACBOOK_KEY_LABELS: Array<
+  Array<{
+    label: string;
+    secondary?: string;
+    isTouchId?: boolean;
+    isModifier?: boolean;
+    align?: "left" | "right" | "center";
+  }>
+> = [
+    [
+      { label: "esc", isModifier: true, align: "left" },
+      { label: "F1", isModifier: true },
+      { label: "F2", isModifier: true },
+      { label: "F3", isModifier: true },
+      { label: "F4", isModifier: true },
+      { label: "F5", isModifier: true },
+      { label: "F6", isModifier: true },
+      { label: "F7", isModifier: true },
+      { label: "F8", isModifier: true },
+      { label: "F9", isModifier: true },
+      { label: "F10", isModifier: true },
+      { label: "F11", isModifier: true },
+      { label: "F12", isModifier: true },
+      { label: "", isTouchId: true },
+    ],
+    [
+      { label: "`", secondary: "~" },
+      { label: "1", secondary: "!" },
+      { label: "2", secondary: "@" },
+      { label: "3", secondary: "#" },
+      { label: "4", secondary: "$" },
+      { label: "5", secondary: "%" },
+      { label: "6", secondary: "^" },
+      { label: "7", secondary: "&" },
+      { label: "8", secondary: "*" },
+      { label: "9", secondary: "(" },
+      { label: "0", secondary: ")" },
+      { label: "-", secondary: "_" },
+      { label: "=", secondary: "+" },
+      { label: "delete", isModifier: true, align: "right" },
+    ],
+    [
+      { label: "tab", isModifier: true, align: "left" },
+      { label: "Q" },
+      { label: "W" },
+      { label: "E" },
+      { label: "R" },
+      { label: "T" },
+      { label: "Y" },
+      { label: "U" },
+      { label: "I" },
+      { label: "O" },
+      { label: "P" },
+      { label: "[", secondary: "{" },
+      { label: "]", secondary: "}" },
+      { label: "\\", secondary: "|" },
+    ],
+    [
+      { label: "caps", isModifier: true, align: "left" },
+      { label: "A" },
+      { label: "S" },
+      { label: "D" },
+      { label: "F" },
+      { label: "G" },
+      { label: "H" },
+      { label: "J" },
+      { label: "K" },
+      { label: "L" },
+      { label: ";", secondary: ":" },
+      { label: "'", secondary: '"' },
+      { label: "return", isModifier: true, align: "right" },
+    ],
+    [
+      { label: "shift", isModifier: true, align: "left" },
+      { label: "Z" },
+      { label: "X" },
+      { label: "C" },
+      { label: "V" },
+      { label: "B" },
+      { label: "N" },
+      { label: "M" },
+      { label: ",", secondary: "<" },
+      { label: ".", secondary: ">" },
+      { label: "/", secondary: "?" },
+      { label: "shift", isModifier: true, align: "right" },
+    ],
+    [
+      { label: "fn", isModifier: true, align: "left" },
+      { label: "⌃", isModifier: true },
+      { label: "⌥", isModifier: true },
+      { label: "⌘", isModifier: true },
+      { label: "" },
+      { label: "⌘", isModifier: true },
+      { label: "⌥", isModifier: true },
+      { label: "◀", isModifier: true },
+      { label: "▲▼", isModifier: true },
+      { label: "▶", isModifier: true },
+    ],
+  ];
 
 function buildMacBookProKeyboard(): KeycapPlacement[] {
   const keys: KeycapPlacement[] = [];
-  const deckW = 2.74;
-  const startZ = -0.82;
-  const rowGap = 0.172;
   const keyGap = 0.022;
 
   // Modern MacBook Pro layout: full-height function row (top) + wide command/space row (bottom)
@@ -137,26 +247,198 @@ function buildMacBookProKeyboard(): KeycapPlacement[] {
 
   rows.forEach((row, rowIdx) => {
     const totalWeight = row.reduce((acc, w) => acc + w, 0);
-    const usableW = deckW - keyGap * (row.length - 1);
+    const usableW = KEY_DECK_W - keyGap * (row.length - 1);
     const unitW = usableW / totalWeight;
     const keyD = rowIdx === 0 ? 0.132 : 0.144;
 
-    let cursorX = -deckW * 0.5;
-    const z = startZ + rowIdx * rowGap;
+    let cursorX = -KEY_DECK_W * 0.5;
+    const z = KEY_START_Z + rowIdx * KEY_ROW_GAP;
 
-    row.forEach((weight) => {
+    row.forEach((weight, colIdx) => {
       const kw = unitW * weight;
+      const meta = MACBOOK_KEY_LABELS[rowIdx]?.[colIdx] ?? { label: "" };
       keys.push({
         x: cursorX + kw * 0.5,
         z,
         w: kw,
         d: keyD,
+        label: meta.label,
+        secondary: meta.secondary,
+        isTouchId: meta.isTouchId,
+        isModifier: meta.isModifier,
+        align: meta.align,
       });
       cursorX += kw + keyGap;
     });
   });
 
   return keys;
+}
+
+/**
+ * High-DPI 2048×768 Static CanvasTexture for Crisp Backlit Apple Magic Keyboard Legends.
+ * Mapped 1:1 to every 3D instanced keycap top surface — 0 per-frame CPU overhead!
+ */
+function createKeyboardLegendsTexture(
+  keys: KeycapPlacement[]
+): THREE.CanvasTexture | null {
+  if (typeof document === "undefined") return null;
+
+  const cw = 2048;
+  const ch = 768;
+  const canvas = document.createElement("canvas");
+  canvas.width = cw;
+  canvas.height = ch;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+
+  ctx.clearRect(0, 0, cw, ch);
+
+  const drawRoundedStroke = (
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    r: number
+  ) => {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  };
+
+  for (const k of keys) {
+    const cx = ((k.x + KEY_DECK_W * 0.5) / KEY_DECK_W) * cw;
+    const cy = ((k.z - KEY_DECK_Z_MIN) / KEY_DECK_D) * ch;
+    const kw = (k.w / KEY_DECK_W) * cw;
+    const kh = (k.d / KEY_DECK_D) * ch;
+    const left = cx - kw * 0.5;
+    const top = cy - kh * 0.5;
+
+    // Subtle crisp top-bevel outline + delicate white backlight bleed around every keycap
+    ctx.save();
+    drawRoundedStroke(left + 2, top + 2, kw - 4, kh - 4, 12);
+    ctx.strokeStyle = "rgba(245, 244, 240, 0.19)";
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+    ctx.restore();
+
+    if (k.isTouchId) {
+      // Signature MacBook Pro Touch ID recessed circular ring
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, Math.min(kw, kh) * 0.3, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(245, 244, 240, 0.45)";
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.restore();
+      continue;
+    }
+
+    if (!k.label) continue;
+
+    ctx.save();
+    ctx.fillStyle = "rgba(248, 247, 243, 0.94)";
+    ctx.shadowColor = "rgba(255, 255, 255, 0.48)";
+    ctx.shadowBlur = 7;
+    ctx.textBaseline = "middle";
+
+    if (k.secondary) {
+      // Dual-legend keycap (number & symbol rows)
+      ctx.textAlign = "center";
+      ctx.font = "500 22px system-ui, -apple-system, sans-serif";
+      ctx.fillStyle = "rgba(235, 234, 228, 0.72)";
+      ctx.fillText(k.secondary, cx, cy - kh * 0.22);
+
+      ctx.font = "600 30px system-ui, -apple-system, sans-serif";
+      ctx.fillStyle = "rgba(250, 249, 245, 0.96)";
+      ctx.fillText(k.label, cx, cy + kh * 0.16);
+    } else if (k.isModifier) {
+      const fontSize = k.label.length > 2 ? 23 : 30;
+      ctx.font = `500 ${fontSize}px system-ui, -apple-system, sans-serif`;
+      if (k.align === "left") {
+        ctx.textAlign = "left";
+        ctx.fillText(k.label, left + 18, cy + kh * 0.12);
+      } else if (k.align === "right") {
+        ctx.textAlign = "right";
+        ctx.fillText(k.label, left + kw - 18, cy + kh * 0.12);
+      } else {
+        ctx.textAlign = "center";
+        ctx.fillText(k.label, cx, cy);
+      }
+    } else {
+      // Primary QWERTY alpha letters — crisp centered Apple typography
+      ctx.textAlign = "center";
+      ctx.font = "600 35px system-ui, -apple-system, sans-serif";
+      ctx.fillText(k.label, cx, cy + 1);
+    }
+
+    ctx.restore();
+  }
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+const APPLE_LOGO_SVG_PATH =
+  "M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z";
+
+/**
+ * Crisp Brushed-Silver Mirror Apple Logo RGBA Texture (512×512) for the Space Black MacBook Pro lid back.
+ * Uses a single premultiplied-clean RGBA CanvasTexture with satin platinum highlight so it gleams
+ * clearly against dark anodized Space Black aluminum from every studio angle.
+ */
+function createAppleLogoTexture(): THREE.CanvasTexture | null {
+  if (typeof document === "undefined" || typeof Path2D === "undefined") {
+    return null;
+  }
+
+  const size = 512;
+  const path = new Path2D(APPLE_LOGO_SVG_PATH);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+
+  ctx.clearRect(0, 0, size, size);
+
+  ctx.save();
+  ctx.translate(64, 0);
+
+  // Gleaming brushed-platinum studio mirror gradient (contrasts cleanly on Space Black lid)
+  const grad = ctx.createLinearGradient(0, 24, 384, 492);
+  grad.addColorStop(0, "#E4E6EC");
+  grad.addColorStop(0.32, "#B8BCC6");
+  grad.addColorStop(0.54, "#8E929C");
+  grad.addColorStop(0.76, "#D6D9E0");
+  grad.addColorStop(1, "#9CA0AA");
+
+  ctx.fillStyle = grad;
+  ctx.fill(path);
+
+  // Razor-thin silver specular bevel edge around silhouette
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.55)";
+  ctx.lineWidth = 3.5;
+  ctx.stroke(path);
+  ctx.restore();
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  tex.needsUpdate = true;
+  return tex;
 }
 
 function createSoftStudioShadowTexture(): THREE.CanvasTexture | null {
@@ -273,6 +555,8 @@ export function ArchitecturalGlassLaptop() {
   const rootRef = useRef<THREE.Group>(null);
   const lidPivotRef = useRef<THREE.Group>(null);
   const keysMeshRef = useRef<THREE.InstancedMesh>(null);
+  const keyLegendMeshRef = useRef<THREE.Mesh>(null);
+  const keyLegendMatRef = useRef<THREE.MeshBasicMaterial>(null);
   const shadowMeshRef = useRef<THREE.Mesh>(null);
   const shadowMatRef = useRef<THREE.MeshBasicMaterial>(null);
 
@@ -346,6 +630,11 @@ export function ArchitecturalGlassLaptop() {
 
   const shadowTexture = useMemo(() => createSoftStudioShadowTexture(), []);
   const speakerTexture = useMemo(() => createSpeakerGrilleTexture(), []);
+  const appleLogoTexture = useMemo(() => createAppleLogoTexture(), []);
+  const keyboardLegendTexture = useMemo(
+    () => createKeyboardLegendsTexture(keyboardLayout),
+    [keyboardLayout]
+  );
 
   const glassSheenMaterial = useMemo(
     () =>
@@ -366,14 +655,14 @@ export function ArchitecturalGlassLaptop() {
 
   const materials = useMemo(
     () => ({
-      // Authentic M4 Space Black Anodized Aluminum (sleek dark titanium-graphite catching crisp studio highlights)
+      // Authentic M4 Space Black Anodized Aluminum (satin dark titanium-graphite catching soft studio sheen)
       spaceBlack: new THREE.MeshPhysicalMaterial({
-        color: "#28292D",
-        metalness: 0.92,
-        roughness: 0.21,
-        clearcoat: 0.36,
-        clearcoatRoughness: 0.22,
-        envMapIntensity: 1.45,
+        color: "#2E3036",
+        metalness: 0.78,
+        roughness: 0.28,
+        clearcoat: 0.34,
+        clearcoatRoughness: 0.24,
+        envMapIntensity: 1.55,
       }),
       bezelGlass: new THREE.MeshPhysicalMaterial({
         color: "#070708",
@@ -392,22 +681,22 @@ export function ArchitecturalGlassLaptop() {
         roughness: 0.35,
       }),
       keyWell: new THREE.MeshStandardMaterial({
-        color: "#0B0B0D",
-        metalness: 0.25,
-        roughness: 0.72,
+        color: "#08080A",
+        metalness: 0.22,
+        roughness: 0.78,
       }),
       keycap: new THREE.MeshStandardMaterial({
-        color: "#151518",
-        metalness: 0.22,
-        roughness: 0.48,
+        color: "#222328",
+        metalness: 0.28,
+        roughness: 0.4,
       }),
       trackpad: new THREE.MeshPhysicalMaterial({
-        color: "#232428",
-        metalness: 0.72,
+        color: "#2A2B30",
+        metalness: 0.74,
         roughness: 0.14,
         clearcoat: 0.9,
         clearcoatRoughness: 0.06,
-        envMapIntensity: 1.4,
+        envMapIntensity: 1.45,
       }),
       rubberFoot: new THREE.MeshStandardMaterial({
         color: "#0A0A0B",
@@ -443,6 +732,8 @@ export function ArchitecturalGlassLaptop() {
     const sheen = glassSheenMatRef.current;
     const sTex = shadowTexture;
     const spkTex = speakerTexture;
+    const kLegTex = keyboardLegendTexture;
+    const logoTex = appleLogoTexture;
 
     return () => {
       g.baseGeo.dispose();
@@ -464,8 +755,17 @@ export function ArchitecturalGlassLaptop() {
       sheen.dispose();
       sTex?.dispose();
       spkTex?.dispose();
+      kLegTex?.dispose();
+      logoTex?.dispose();
     };
-  }, [geometries, keyboardLayout, shadowTexture, speakerTexture]);
+  }, [
+    geometries,
+    keyboardLayout,
+    shadowTexture,
+    speakerTexture,
+    keyboardLegendTexture,
+    appleLogoTexture,
+  ]);
 
   useFrame((state, delta) => {
     const group = sceneGroupRef.current;
@@ -541,6 +841,16 @@ export function ArchitecturalGlassLaptop() {
 
     const glassPassClear = 1 - THREE.MathUtils.smoothstep(p, 0.74, 0.88);
     glassSheenMatRef.current.uniforms.uOpacity.value = powerOn * glassPassClear;
+
+    // 3b. Backlit MacBook Pro Keyboard Legends (off when closed -> crisp white backlight as lid opens!)
+    if (keyLegendMeshRef.current && keyLegendMatRef.current) {
+      const showKeys = targetLidDeg > 3.5;
+      keyLegendMeshRef.current.visible = showKeys;
+      if (showKeys) {
+        const backlight = THREE.MathUtils.smoothstep(targetLidDeg, 6, 36);
+        keyLegendMatRef.current.opacity = (0.35 + backlight * 0.65) * glassPassClear;
+      }
+    }
 
     // 4. Soft Studio Contact Shadow
     if (shadowMeshRef.current && shadowMatRef.current) {
@@ -625,6 +935,26 @@ export function ArchitecturalGlassLaptop() {
           <boxGeometry args={[1, 1, 1]} />
         </instancedMesh>
 
+        {/* Crisp Backlit QWERTY Apple Magic Keyboard Legends (mapped 1:1 over every 3D keycap) */}
+        {keyboardLegendTexture ? (
+          <mesh
+            ref={keyLegendMeshRef}
+            visible={false}
+            position={[0, BASE_H * 0.5 + 0.0224, KEY_DECK_CENTER_Z]}
+            rotation={[-Math.PI / 2, 0, 0]}
+          >
+            <planeGeometry args={[KEY_DECK_W, KEY_DECK_D]} />
+            <meshBasicMaterial
+              ref={keyLegendMatRef}
+              map={keyboardLegendTexture}
+              transparent
+              depthWrite={false}
+              toneMapped={false}
+              opacity={0}
+            />
+          </mesh>
+        ) : null}
+
         {/* Micro-Drilled Left & Right Speaker Grilles */}
         {speakerTexture ? (
           <>
@@ -674,6 +1004,28 @@ export function ArchitecturalGlassLaptop() {
         <group ref={lidPivotRef} position={[0, HINGE_Y, HINGE_Z]}>
           {/* Solid Space Black Lid Shell */}
           <mesh geometry={geometries.lidGeo} material={materials.spaceBlack} />
+
+          {/* Brushed-Platinum Mirror Apple Logo on Outer Lid Back (authentic MacBook Pro orientation: upright when lid is open!) */}
+          {appleLogoTexture ? (
+            <mesh
+              position={[0, CHASSIS_D * 0.5, -(LID_DEPTH * 0.5 + 0.011)]}
+              rotation={[0, Math.PI, 0]}
+            >
+              <planeGeometry args={[0.56, 0.56]} />
+              <meshStandardMaterial
+                map={appleLogoTexture}
+                transparent
+                alphaTest={0.05}
+                metalness={0.35}
+                roughness={0.18}
+                emissive="#B8BCC6"
+                emissiveMap={appleLogoTexture}
+                emissiveIntensity={0.42}
+                polygonOffset
+                polygonOffsetFactor={-2}
+              />
+            </mesh>
+          ) : null}
 
           {/* Flush Edge-to-Edge Glossy Black Glass Bezel Face */}
           <mesh

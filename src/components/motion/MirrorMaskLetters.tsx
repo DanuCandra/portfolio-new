@@ -42,7 +42,7 @@ export function MirrorMaskLetters({
   return (
     <span
       className={cn(
-        "inline-flex overflow-y-clip overflow-x-visible px-[0.08em] py-[0.06em] -mx-[0.08em]",
+        "inline-flex overflow-y-clip overflow-x-visible py-[0.06em] pr-[0.07em]",
         className
       )}
     >

@@ -5,6 +5,7 @@ export interface Dictionary {
     ogSubtitle: string;
   };
   nav: {
+    about: string;
     work: string;
     contact: string;
   };
@@ -20,16 +21,21 @@ export interface Dictionary {
   };
   caseStudy: {
     back: string;
+    allProjects: string;
     overview: string;
     problem: string;
     solution: string;
     features: string;
     architecture: string;
     stack: string;
+    stackBreakdown: string;
+    category: string;
     role: string;
     year: string;
     liveDemo: string;
     source: string;
+    desktopCaption: string;
+    mobileCaption: string;
     nextProject: string;
   };
   contact: {
@@ -40,95 +46,149 @@ export interface Dictionary {
     downloadCv: string;
     backToTop: string;
   };
+  about: {
+    eyebrow: string;
+    availability: string;
+    principlesHeading: string;
+    capabilitiesHeading: string;
+    colophonEyebrow: string;
+    experienceHeading: string;
+    educationHeading: string;
+    expandHint: string;
+    bridgeEyebrow: string;
+    bridgeLead: string;
+    bridgeItalic: string;
+    exploreWork: string;
+  };
 }
 
 export const dictionaries: Record<"id" | "en", Dictionary> = {
   id: {
     meta: {
-      title: "Danu Candra Saputra — Fullstack Web Developer | danucs",
+      title: "Danu Candra Saputra — Full-Stack Web Developer | danucs",
       description:
-        "Portfolio resmi Danu Candra Saputra, Fullstack Web Developer. Merancang produk web yang tenang, cepat, dan dibangun utuh hingga produksi.",
-      ogSubtitle: "Fullstack Web Developer",
+        "Portfolio Danu Candra Saputra, Full-Stack Web Developer. Membangun aplikasi web dengan Laravel, Next.js, React, Vue.js, serta pengelolaan server Linux dan Docker.",
+      ogSubtitle: "Full-Stack Web Developer",
     },
     nav: {
-      work: "Karya",
+      about: "Tentang Saya",
+      work: "Proyek",
       contact: "Kontak",
     },
     hero: {
-      scroll: "Gulir",
+      scroll: "Scroll",
     },
     work: {
-      heading: "Karya Pilihan",
-      modeIndex: "Index",
+      heading: "Proyek",
+      modeIndex: "Daftar",
       modeCards: "Kartu",
       liveDemo: "Live Demo",
       explore: "Lihat Detail",
     },
     caseStudy: {
-      back: "Kembali ke Karya",
+      back: "Kembali ke Proyek",
+      allProjects: "Semua Proyek",
       overview: "Ringkasan",
-      problem: "Tantangan",
+      problem: "Masalah",
       solution: "Solusi",
       features: "Fitur Utama",
       architecture: "Arsitektur",
-      stack: "Teknologi",
+      stack: "Tech Stack",
+      stackBreakdown: "Peran Teknologi",
+      category: "Kategori",
       role: "Peran",
       year: "Tahun",
       liveDemo: "Buka Live Demo",
-      source: "Kode Sumber",
-      nextProject: "Karya Berikutnya",
+      source: "Source Code",
+      desktopCaption: "Tampilan Desktop · 1440px",
+      mobileCaption: "Tampilan Mobile · 390px",
+      nextProject: "Proyek Berikutnya",
     },
     contact: {
-      headlineLead: "Mari",
-      headlineItalic: "berkolaborasi.",
+      headlineLead: "Hubungi",
+      headlineItalic: "saya.",
       copyPrompt: "Salin email",
-      copied: "Email tersalin",
-      downloadCv: "CV (PDF)",
-      backToTop: "Atas",
+      copied: "Email disalin",
+      downloadCv: "Download CV (PDF)",
+      backToTop: "Ke atas",
+    },
+    about: {
+      eyebrow: "Tentang Saya",
+      availability: "Tersedia untuk proyek",
+      principlesHeading: "Yang Saya Kerjakan",
+      capabilitiesHeading: "Tech Stack",
+      colophonEyebrow: "Pengalaman & Pendidikan",
+      experienceHeading: "Pengalaman",
+      educationHeading: "Pendidikan",
+      expandHint: "Klik untuk melihat detail",
+      bridgeEyebrow: "Kontak",
+      bridgeLead: "Tertarik bekerja sama?",
+      bridgeItalic: "Hubungi saya.",
+      exploreWork: "Lihat Proyek",
     },
   },
   en: {
     meta: {
-      title: "Danu Candra Saputra — Fullstack Web Developer | danucs",
+      title: "Danu Candra Saputra — Full-Stack Web Developer | danucs",
       description:
-        "Official portfolio of Danu Candra Saputra, Fullstack Web Developer crafting quiet, fast web products engineered end to end.",
-      ogSubtitle: "Fullstack Web Developer",
+        "Portfolio of Danu Candra Saputra, Full-Stack Web Developer building web applications with Laravel, Next.js, React, Vue.js, and Linux/Docker servers.",
+      ogSubtitle: "Full-Stack Web Developer",
     },
     nav: {
-      work: "Work",
+      about: "About Me",
+      work: "Projects",
       contact: "Contact",
     },
     hero: {
       scroll: "Scroll",
     },
     work: {
-      heading: "Selected Work",
+      heading: "Projects",
       modeIndex: "Index",
       modeCards: "Cards",
       liveDemo: "Live Demo",
-      explore: "Explore",
+      explore: "View Details",
     },
     caseStudy: {
-      back: "Back to Work",
+      back: "Back to Projects",
+      allProjects: "All Projects",
       overview: "Overview",
-      problem: "Challenge",
+      problem: "Problem",
       solution: "Solution",
-      features: "Key Capabilities",
+      features: "Key Features",
       architecture: "Architecture",
-      stack: "Stack",
+      stack: "Tech Stack",
+      stackBreakdown: "Tech Breakdown",
+      category: "Category",
       role: "Role",
       year: "Year",
-      liveDemo: "Launch Live Demo",
+      liveDemo: "Open Live Demo",
       source: "Source Code",
+      desktopCaption: "Desktop View · 1440px",
+      mobileCaption: "Mobile View · 390px",
       nextProject: "Next Project",
     },
     contact: {
-      headlineLead: "Let's work",
-      headlineItalic: "together.",
+      headlineLead: "Get in",
+      headlineItalic: "touch.",
       copyPrompt: "Copy email",
-      copied: "Copied to clipboard",
-      downloadCv: "CV (PDF)",
-      backToTop: "Top",
+      copied: "Email copied",
+      downloadCv: "Download CV (PDF)",
+      backToTop: "Back to top",
+    },
+    about: {
+      eyebrow: "About Me",
+      availability: "Available for projects",
+      principlesHeading: "What I Do",
+      capabilitiesHeading: "Tech Stack",
+      colophonEyebrow: "Experience & Education",
+      experienceHeading: "Experience",
+      educationHeading: "Education",
+      expandHint: "Click to expand",
+      bridgeEyebrow: "Contact",
+      bridgeLead: "Interested in working together?",
+      bridgeItalic: "Get in touch.",
+      exploreWork: "View Projects",
     },
   },
 };

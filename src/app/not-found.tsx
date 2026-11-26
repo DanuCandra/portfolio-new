@@ -16,9 +16,9 @@ export default function NotFound() {
       <TransitionLink
         href="/"
         curtainLabel="Danu Candra"
-        className="group mt-10 border-b border-[#0D0D0D]/40 pb-1 text-sm text-[#0D0D0D] transition-colors hover:border-[#0D0D0D]"
+        className="group mt-10 pb-1 text-sm text-[#0D0D0D]"
       >
-        <RollingText text="Return home" italicClassName="text-base" />
+        <RollingText text="Return home" underline />
       </TransitionLink>
     </main>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { getDictionary, localePath, switchLocalePath } from "@/i18n";
 import { profileData } from "@/data/profile";
@@ -23,15 +23,16 @@ const getServerNavSurface = (): SurfaceMode => "paper";
 
 /**
  * Auto-Invert Ultra-Minimalist 1-Row Editorial Navbar.
- * - Strictly 4 items: `danucs.` (kiri) · `Work` · `Contact` · `ID/EN` (kanan)
- * - Nol kotak border, nol backdrop-blur berat, nol HUD/badge.
- * - Otomatis berubah warna Hitam (#0D0D0D) ↔ Putih (#F5F4F0) mengikuti latar di bawahnya
- *   saat scroll maju maupun *scroll back*.
+ * - `danucs.` (kiri) · `Tentang/About` · `Karya/Work` · `Kontak/Contact` · `ID/EN` (kanan)
+ * - Context-aware transitions:
+ *   - `Tentang / About` → 5-Column Staggered Architectural Shutter
+ *   - `Karya / Kontak` → Spatial Camera Glide di Home (atau Shutter + hash landing dari halaman lain)
+ *   - `ID / EN` → In-Place Kinetic Language Morph (tanpa layar hitam & tanpa reset scroll!)
  */
 export function MinimalNavbar({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   const pathname = usePathname();
-  const { navigateWithCurtain, scrollWithCurtain } = usePageTransition();
+  const { navigateWithShutter, scrollWithGlide } = usePageTransition();
 
   const navSurface = useSyncExternalStore(
     subscribeSurfaceMode,
@@ -40,32 +41,43 @@ export function MinimalNavbar({ locale }: { locale: Locale }) {
   );
 
   const threadRef = useRef<HTMLDivElement>(null);
+  const [articleScrolled, setArticleScrolled] = useState(false);
   const isHomeRoute = pathname === "/" || pathname === "/en";
+  const isAboutRoute = pathname === "/about" || pathname === "/en/about";
   const onInk = navSurface === "ink";
 
   useEffect(() => {
     let rafId = 0;
+    let lastScrolled = false;
     const syncThread = () => {
       if (threadRef.current) {
         threadRef.current.style.transform = `scaleX(${motionState.scrollProgress.toFixed(4)})`;
+      }
+      if (!isHomeRoute) {
+        const nextScrolled = motionState.scrollY > 48;
+        if (nextScrolled !== lastScrolled) {
+          lastScrolled = nextScrolled;
+          setArticleScrolled(nextScrolled);
+        }
       }
       rafId = requestAnimationFrame(syncThread);
     };
     rafId = requestAnimationFrame(syncThread);
     return () => cancelAnimationFrame(rafId);
-  }, []);
+  }, [isHomeRoute]);
 
   const handleAnchorScroll = (selector: string, label: string) => {
     if (!isHomeRoute) {
-      navigateWithCurtain(`${localePath(locale, "/")}${selector}`, label);
+      navigateWithShutter(localePath(locale, "/"), label, { hash: selector });
       return;
     }
 
-    scrollWithCurtain(selector, label);
+    scrollWithGlide(selector, label);
   };
 
   const altLocale: Locale = locale === "id" ? "en" : "id";
   const altHref = switchLocalePath(pathname, altLocale);
+  const aboutHref = localePath(locale, "/about");
 
   return (
     <>
@@ -84,14 +96,19 @@ export function MinimalNavbar({ locale }: { locale: Locale }) {
         />
       </div>
 
-      {/* Fixed Transparent 1-Row Editorial Navigation */}
+      {/* Fixed Editorial Navigation (100% transparent on Home; subtle paper veil mid-scroll on Case Study) */}
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-40 px-6 py-6 transition-colors duration-500 ease-expo-out md:px-14 md:py-8",
-          onInk ? "text-[#F5F4F0]" : "text-[#0D0D0D]"
+          "fixed inset-x-0 top-0 z-40 px-6 py-6 transition-[color,background-color,border-color] duration-500 ease-expo-out md:px-14 md:py-8",
+          onInk ? "text-[#F5F4F0]" : "text-[#0D0D0D]",
+          !isHomeRoute &&
+            articleScrolled &&
+            (onInk
+              ? "border-b border-[#F5F4F0]/10 bg-[#0D0D0D]/88 py-5 backdrop-blur-sm md:py-5"
+              : "border-b border-[#0D0D0D]/8 bg-[#F5F4F0]/90 py-5 backdrop-blur-sm md:py-5")
         )}
       >
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between">
+        <div className="mx-auto flex max-w-[1380px] items-center justify-between">
           {/* Left: Minimal Brand Signature */}
           <MagneticField strength={0.18}>
             <TransitionLink
@@ -99,29 +116,46 @@ export function MinimalNavbar({ locale }: { locale: Locale }) {
               curtainLabel={profileData.fullName}
               className="group inline-flex items-baseline text-[15px] font-medium tracking-[-0.02em]"
             >
-              <RollingText
-                text={`${profileData.brandHandle}.`}
-                italicClassName="text-[17px]"
-              />
+              <RollingText text={`${profileData.brandHandle}.`} />
             </TransitionLink>
           </MagneticField>
 
-          {/* Right: 3 Clean Text Controls (Work · Contact · Locale) */}
+          {/* Right: Clean Editorial Controls (About Me · Projects · Contact · Locale) */}
           <nav
             aria-label="Primary navigation"
-            className="flex items-center gap-6 text-[13px] tracking-[-0.01em] sm:gap-9"
+            className="flex items-center gap-3.5 text-[12px] tracking-[-0.01em] sm:gap-8 sm:text-[13px]"
           >
+            <MagneticField strength={0.2}>
+              <TransitionLink
+                href={aboutHref}
+                mode="shutter"
+                curtainLabel={dict.nav.about}
+                className={cn(
+                  "group relative inline-flex items-center gap-1.5 font-normal transition-transform active:scale-95",
+                  isAboutRoute && "font-medium"
+                )}
+              >
+                {isAboutRoute ? (
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "h-1 w-1 rounded-full",
+                      onInk ? "bg-[#F5F4F0]" : "bg-[#0D0D0D]"
+                    )}
+                  />
+                ) : null}
+                <RollingText text={dict.nav.about} underline />
+              </TransitionLink>
+            </MagneticField>
+
             <MagneticField strength={0.2}>
               <button
                 type="button"
                 onClick={() => handleAnchorScroll("#work", dict.work.heading)}
                 data-cursor="pointer"
-                className="group cursor-pointer font-normal transition-transform active:scale-95"
+                className="group inline-flex cursor-pointer items-center font-normal transition-transform active:scale-95"
               >
-                <RollingText
-                  text={dict.nav.work}
-                  italicClassName="text-[15px]"
-                />
+                <RollingText text={dict.nav.work} underline />
               </button>
             </MagneticField>
 
@@ -130,27 +164,26 @@ export function MinimalNavbar({ locale }: { locale: Locale }) {
                 type="button"
                 onClick={() => handleAnchorScroll("#contact", dict.nav.contact)}
                 data-cursor="pointer"
-                className="group cursor-pointer font-normal transition-transform active:scale-95"
+                className="group inline-flex cursor-pointer items-center font-normal transition-transform active:scale-95"
               >
-                <RollingText
-                  text={dict.nav.contact}
-                  italicClassName="text-[15px]"
-                />
+                <RollingText text={dict.nav.contact} underline />
               </button>
             </MagneticField>
 
             <MagneticField strength={0.2}>
               <TransitionLink
                 href={altHref}
-                curtainLabel={altLocale === "en" ? "English" : "Indonesia"}
+                mode="locale"
                 ariaLabel={
                   altLocale === "en"
                     ? "Switch language to English"
                     : "Ganti bahasa ke Indonesia"
                 }
                 className={cn(
-                  "group inline-flex items-center gap-1 font-mono text-[11px] tracking-[0.12em] uppercase transition-opacity hover:opacity-65",
-                  onInk ? "text-[#A6A59E]" : "text-[#73726C]"
+                  "hairline-sweep group inline-flex items-center gap-1 font-mono text-[11px] tracking-[0.12em] uppercase transition-colors",
+                  onInk
+                    ? "text-[#A6A59E] hover:text-[#F5F4F0]"
+                    : "text-[#73726C] hover:text-[#0D0D0D]"
                 )}
               >
                 <span

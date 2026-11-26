@@ -6,8 +6,7 @@ const enDict = getDictionary("en");
 
 export const metadata: Metadata = {
   title: {
-    default: enDict.meta.title,
-    template: `%s | ${siteConfig.brandHandle}`,
+    absolute: enDict.meta.title,
   },
   description: enDict.meta.description,
   alternates: {

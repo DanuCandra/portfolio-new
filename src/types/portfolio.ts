@@ -15,6 +15,60 @@ export interface SocialLink {
   url: string;
 }
 
+export interface AboutPrinciple {
+  number: string;
+  title: LocalizedText;
+  description: LocalizedText;
+}
+
+export interface CapabilityGroup {
+  label: LocalizedText;
+  items: string[];
+}
+
+export interface ExperienceEntry {
+  id: string;
+  period: LocalizedText;
+  role: LocalizedText;
+  organization: string;
+  type: LocalizedText;
+  highlights: {
+    id: string[];
+    en: string[];
+  };
+}
+
+export interface EducationEntry {
+  id: string;
+  period: LocalizedText;
+  degree: LocalizedText;
+  institution: string;
+  focus: LocalizedText;
+}
+
+export interface ProfileAboutData {
+  portraitImage: string;
+  portraitAlt: LocalizedText;
+  publicLocation: LocalizedText;
+  headline: {
+    id: { lead: string; italic: string; tail: string };
+    en: { lead: string; italic: string; tail: string };
+  };
+  paragraphs: {
+    id: string[];
+    en: string[];
+  };
+  principles: AboutPrinciple[];
+  capabilities: CapabilityGroup[];
+  interlude: {
+    id: { lead: string; italic: string; tail: string; author?: string };
+    en: { lead: string; italic: string; tail: string; author?: string };
+  };
+  interludeStrip: string[];
+  experience: ExperienceEntry[];
+  education: EducationEntry[];
+}
+
 export interface ProfileData {
   fullName: string;
   firstName: string;
@@ -28,11 +82,12 @@ export interface ProfileData {
   };
   bioShort: LocalizedText;
   statement: {
-    id: { lead: string; italic: string; tail: string };
-    en: { lead: string; italic: string; tail: string };
+    id: { lead: string; italic: string; tail: string; author?: string };
+    en: { lead: string; italic: string; tail: string; author?: string };
   };
   disciplines: string[];
   socials: SocialLink[];
+  about: ProfileAboutData;
 }
 
 export type ProjectCategory =
@@ -60,6 +115,11 @@ export interface ProjectMetric {
   value: string;
 }
 
+export interface ProjectStackRole {
+  name: string;
+  role: LocalizedText;
+}
+
 export interface ProjectItem {
   id: string;
   slug: string;
@@ -74,6 +134,8 @@ export interface ProjectItem {
   mockupVariant: ProjectMockupVariant;
   /** Optional real screenshot path (diisi saat ganti proyek asli / Fase 2) */
   coverImage?: string;
+  /** Optional real gallery screenshots for Case Study visual spread (Fase 2) */
+  galleryImages?: string[];
   title: string;
   tagline: LocalizedText;
   summary: LocalizedText;
@@ -87,6 +149,8 @@ export interface ProjectItem {
   architectureNotes: LocalizedText;
   role: LocalizedText;
   techStack: string[];
+  /** Optional per-technology engineering responsibility breakdown */
+  stackRoles?: ProjectStackRole[];
   metrics: ProjectMetric[];
   demoUrl: string;
   repoUrl?: string;

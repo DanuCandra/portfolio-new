@@ -13,7 +13,10 @@ export const OG_IMAGE_SIZE = {
  * 100% offline-safe & privacy-safe (zero phone, address, school, or GPA).
  */
 export function renderPortfolioOgImage(locale: Locale) {
-  const domainText = siteConfig.url.replace(/^https?:\/\//, "");
+  const rawDomain = siteConfig.url.replace(/^https?:\/\//, "");
+  const domainText = rawDomain.startsWith("localhost")
+    ? "danucs.com"
+    : rawDomain;
 
   return new ImageResponse(
     (

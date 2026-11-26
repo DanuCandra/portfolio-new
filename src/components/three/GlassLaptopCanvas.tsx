@@ -55,10 +55,14 @@ function PortalCameraRig() {
     const diveEase = diveT * diveT * (3 - 2 * diveT);
     const parallaxFade = 1 - THREE.MathUtils.smoothstep(p, 0.45, 0.68);
 
-    const startZ = s < 0.78 ? 6.95 : 5.55;
-    const midZ = s < 0.78 ? 5.15 : 4.25;
+    // Aspect-adaptive camera distance so portrait phones (e.g. 390x844) frame the FULL MacBook silhouette cleanly without side cropping
+    const aspect = state.viewport.aspect || 1;
+    const portraitPull = aspect < 0.95 ? Math.min(2.1, 0.98 / Math.max(aspect, 0.45)) : 1.0;
+
+    const startZ = (s < 0.78 ? 6.6 : 5.55) * portraitPull;
+    const midZ = (s < 0.78 ? 5.1 : 4.25) * portraitPull;
     // Stops cleanly in front of the glossy #0D0D0D OLED screen where it fills 100% of any viewport (up to 21:9) without clipping behind the solid lid
-    const endZ = screenWorldZ + 0.68 * s;
+    const endZ = screenWorldZ + 0.62 * s;
 
     const camZ = THREE.MathUtils.lerp(
       THREE.MathUtils.lerp(startZ, midZ, alignT),

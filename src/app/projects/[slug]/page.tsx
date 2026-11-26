@@ -9,7 +9,7 @@ import {
   getProjectSlugs,
   getPublishedProjects,
 } from "@/lib/data/projects";
-import { siteConfig } from "@/lib/site-config";
+import { resolveAbsoluteMediaUrl, siteConfig } from "@/lib/site-config";
 
 export async function generateStaticParams() {
   const slugs = await getProjectSlugs();
@@ -27,6 +27,10 @@ export async function generateMetadata({
 
   const title = `${project.title} — Studi Kasus oleh ${siteConfig.name}`;
   const description = pickText(project.summary, "id");
+  const coverUrl = resolveAbsoluteMediaUrl(project.coverImage);
+  const ogImages = coverUrl
+    ? [{ url: coverUrl, alt: title }]
+    : [{ url: "/opengraph-image", width: 1200, height: 630, alt: title }];
 
   return {
     title,
@@ -52,11 +56,13 @@ export async function generateMetadata({
       url: `/projects/${project.slug}`,
       title: `${title} | ${siteConfig.brandHandle}`,
       description,
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${siteConfig.brandHandle}`,
       description,
+      images: [coverUrl ?? "/opengraph-image"],
     },
   };
 }

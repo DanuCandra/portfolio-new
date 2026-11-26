@@ -1,4 +1,19 @@
+import type { ProjectItem } from "@/types/portfolio";
+
 export type SurfaceMode = "paper" | "ink";
+
+/**
+ * Shared-Element FLIP payload captured at click time for Project -> Case Study Hero Morph.
+ */
+export interface FlipTransitionPayload {
+  project: ProjectItem;
+  rect: {
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  };
+}
 
 export interface MotionRuntimeState {
   scrollY: number;
@@ -14,13 +29,20 @@ export interface MotionRuntimeState {
 
   /** Surface behind the viewport focal center (drives Particles & Cursor tone) */
   surfaceMode: SurfaceMode;
-  /** Surface directly behind the top navbar (drives Auto-Invert Navbar in Stage 04) */
+  /** Surface directly behind the top navbar (drives Auto-Invert Navbar) */
   navSurfaceMode: SurfaceMode;
 
   /** Subtle breeze pulse when user clicks open space (0..1) */
   breezeImpulse: number;
   breezeX: number;
   breezeY: number;
+
+  /** Preserve exact scroll position across in-place ID <-> EN locale morph */
+  preserveScrollY: number | null;
+  /** Target hash selector to land on cleanly behind shutter after cross-route navigation */
+  pendingHash: string | null;
+  /** Shared-element FLIP payload bus for Project -> Case Study hero morph */
+  pendingFlip: FlipTransitionPayload | null;
 
   reducedMotion: boolean;
 }
@@ -43,6 +65,10 @@ export const motionState: MotionRuntimeState = {
   breezeImpulse: 0,
   breezeX: 0,
   breezeY: 0,
+
+  preserveScrollY: null,
+  pendingHash: null,
+  pendingFlip: null,
 
   reducedMotion: false,
 };
@@ -123,4 +149,16 @@ export function setSurfaceModes(
 
 export function setReducedMotionFlag(value: boolean): void {
   motionState.reducedMotion = value;
+}
+
+export function queuePreserveScroll(y: number | null): void {
+  motionState.preserveScrollY = y;
+}
+
+export function queuePendingHash(hash: string | null): void {
+  motionState.pendingHash = hash;
+}
+
+export function setPendingFlip(payload: FlipTransitionPayload | null): void {
+  motionState.pendingFlip = payload;
 }

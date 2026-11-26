@@ -129,35 +129,52 @@ export function QuietStatementSection({ locale }: { locale: Locale }) {
             style={{ transform: "scaleX(0.06)" }}
           />
 
-          {/* Quiet 1-Sentence Editorial Statement (Scroll-Scrubbed Word Illumination) */}
-          <p className="display-statement max-w-5xl text-[#F5F4F0]">
-            {words.map((word, idx) => (
-              <span
-                key={`${word.text}-${idx}`}
-                ref={(el) => {
-                  wordRefs.current[idx] = el;
-                }}
-                style={{ opacity: 0.15 }}
-                className={
-                  word.isItalic
-                    ? "mr-[0.26em] inline-block font-editorial-serif italic font-normal will-change-[opacity,transform]"
-                    : "mr-[0.26em] inline-block will-change-[opacity,transform]"
-                }
-              >
-                {word.text}
-              </span>
-            ))}
-          </p>
+          {/* Editorial Quote / Statement (Scroll-Scrubbed Word Illumination with REAL DOM spaces!) */}
+          <blockquote className="max-w-5xl">
+            <p className="display-statement text-[#F5F4F0]">
+              {words.map((word, idx) => (
+                <span key={`${word.text}-${idx}`}>
+                  <span
+                    ref={(el) => {
+                      wordRefs.current[idx] = el;
+                    }}
+                    style={{ opacity: 0.15 }}
+                    className={
+                      word.isItalic
+                        ? "inline-block font-editorial-serif italic font-normal will-change-[opacity,transform]"
+                        : "inline-block will-change-[opacity,transform]"
+                    }
+                  >
+                    {word.text}
+                  </span>
+                  {idx < words.length - 1 ? " " : null}
+                </span>
+              ))}
+            </p>
+            {statement.author ? (
+              <footer className="mt-6 font-mono text-xs tracking-[0.14em] text-[#A6A59E] uppercase">
+                — {statement.author}
+              </footer>
+            ) : null}
+          </blockquote>
 
-          {/* Single Quiet Scroll-Coupled Drift Discipline Line */}
-          <div className="mt-14 overflow-hidden border-t border-[#F5F4F0]/10 pt-6 sm:mt-20">
+          {/* Single Quiet Scroll-Coupled Drift Discipline Line with soft edge fade mask */}
+          <div
+            className="mt-14 overflow-hidden border-t border-[#F5F4F0]/10 pt-6 sm:mt-20"
+            style={{
+              maskImage:
+                "linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%)",
+            }}
+          >
             <div
               ref={driftRef}
               className="whitespace-nowrap font-mono text-[11px] tracking-[0.22em] text-[#A6A59E] uppercase will-change-transform"
             >
               <span>{disciplineLine}</span>
               <span className="mx-12 opacity-35" aria-hidden="true">
-                —
+                ·
               </span>
               <span className="opacity-55">{disciplineLine}</span>
             </div>

@@ -27,48 +27,78 @@ export const dummyProjects: ProjectItem[] = [
     mockupVariant: "aether-ai",
     title: "AetherAI Studio",
     tagline: {
-      id: "Orkestrasi alur kerja AI dan analitik real-time berbasis web.",
-      en: "Real-time AI workflow orchestration and analytics workspace.",
+      id: "Aplikasi web untuk menyusun alur kerja AI dan memantau penggunaan API secara langsung.",
+      en: "Web app for building AI workflows and tracking live API usage.",
     },
     summary: {
-      id: "Platform SaaS untuk menyusun pipeline otomatisasi AI, memantau penggunaan token, dan mengelola webhook tim secara terpusat.",
-      en: "A SaaS web application for composing AI pipelines, monitoring live token telemetry, and managing team webhooks.",
+      id: "Aplikasi SaaS untuk mengatur pipeline otomatisasi AI, melihat catatan pemakaian token, dan mengelola webhook tim di satu dasbor.",
+      en: "A SaaS web app for managing AI pipelines, monitoring token usage, and organizing team webhooks in one dashboard.",
     },
     overview: {
-      id: "AetherAI Studio adalah platform web multi-tenant yang memungkinkan tim engineering merancang node alur kerja AI secara visual, menguji prompt paralel, serta memantau latensi dan biaya eksekusi dalam satu ruang kerja bersih.",
-      en: "AetherAI Studio is a multi-tenant web platform enabling engineering teams to design visual AI workflow nodes, benchmark prompts in parallel, and track execution latency in one calm workspace.",
+      id: "AetherAI Studio dibuat agar tim developer bisa merangkai langkah eksekusi AI secara visual, membandingkan hasil prompt, dan memantau latensi maupun biaya API tanpa harus bolak-balik terminal dan skrip terpisah.",
+      en: "AetherAI Studio lets engineering teams wire AI steps visually, compare prompt outputs, and monitor latency and API costs without jumping across scattered scripts.",
     },
     problem: {
-      id: "Tim produk kesulitan memantau eksperimen prompt, integrasi API, dan biaya model AI yang tersebar di skrip internal tanpa observabilitas terpadu.",
-      en: "Product teams struggled to track prompt experiments, API webhooks, and unpredictable AI model costs scattered across ad-hoc internal scripts.",
+      id: "Pengujian prompt, integrasi webhook, dan pencatatan biaya API biasanya tercecer di banyak skrip internal sehingga susah dipantau saat mulai dipakai tim.",
+      en: "Prompt tests, webhook handlers, and API usage logs often live in scattered scripts, making them hard to track once a team starts relying on them.",
     },
     solution: {
-      id: "Membangun visual pipeline builder dengan streaming eksekusi real-time, caching respons di Redis, kontrol akses berbasis peran (RBAC), dan pencatatan kuota di PostgreSQL.",
-      en: "Built a visual pipeline builder backed by streaming execution logs, structured caching in Redis, role-based access control, and real-time metering in PostgreSQL.",
+      id: "Membangun editor alur kerja berbasis node dengan log eksekusi streaming, cache respons di Redis, hak akses per peran (RBAC), serta pencatatan kuota di PostgreSQL.",
+      en: "Built a node-based workflow editor with streaming execution logs, Redis response caching, role-based access control, and quota tracking in PostgreSQL.",
     },
     features: {
       id: [
-        "Visual Node Pipeline Builder dengan inspeksi payload real-time",
-        "Dasbor telemetri latensi, throughput, dan pemakaian token",
-        "Workspace Multi-Tenant dengan RBAC dan manajemen API Key",
-        "Log eksekusi streaming dengan replay payload instan",
+        "Editor alur kerja visual dengan pratinjau payload secara langsung",
+        "Dasbor pantauan latensi, jumlah request, dan pemakaian token",
+        "Workspace multi-tim dengan pengaturan hak akses dan API Key",
+        "Riwayat log eksekusi yang bisa dijalankan ulang kapan saja",
       ],
       en: [
-        "Visual Node Pipeline Builder with real-time payload inspection",
-        "Telemetry dashboard for latency, throughput, and token usage",
-        "Multi-Tenant workspaces with RBAC and scoped API keys",
-        "Streaming execution logs with instant payload replay",
+        "Visual node workflow editor with live payload inspection",
+        "Usage dashboard for latency, throughput, and token counts",
+        "Multi-team workspaces with RBAC and scoped API keys",
+        "Streaming execution history with one-click payload replay",
       ],
     },
     architectureNotes: {
-      id: "Next.js App Router, REST & Streaming API, PostgreSQL + Prisma ORM untuk data transaksional, serta Redis untuk rate-limiting dan antrean tugas.",
-      en: "Next.js App Router, REST & streaming endpoints, PostgreSQL + Prisma ORM for transactional data, and Redis for rate-limiting and async queues.",
+      id: "Dibangun dengan Next.js App Router, endpoint REST & streaming, PostgreSQL + Prisma untuk data utama, serta Redis untuk rate-limiting dan antrean proses.",
+      en: "Built on Next.js App Router, REST & streaming endpoints, PostgreSQL + Prisma for core records, and Redis for rate-limiting and async queues.",
     },
     role: {
-      id: "Fullstack Architecture & UI",
-      en: "Fullstack Architecture & UI",
+      id: "Full-Stack Developer",
+      en: "Full-Stack Developer",
     },
     techStack: ["Next.js", "TypeScript", "PostgreSQL", "Redis"],
+    stackRoles: [
+      {
+        name: "Next.js",
+        role: {
+          id: "Routing SSR, endpoint streaming, dan halaman editor pipeline",
+          en: "App Router SSR, streaming endpoints, and the pipeline editor",
+        },
+      },
+      {
+        name: "TypeScript",
+        role: {
+          id: "Tipe data konsisten antara editor visual dan API eksekutor",
+          en: "Shared strict schemas across the visual editor and API runner",
+        },
+      },
+      {
+        name: "PostgreSQL",
+        role: {
+          id: "Data workspace, hak akses pengguna, dan pencatatan kuota token",
+          en: "Workspace records, user permissions, and token metering logs",
+        },
+      },
+      {
+        name: "Redis",
+        role: {
+          id: "Pembatasan request per API key, cache respons, dan antrean webhook",
+          en: "Per-key rate limiting, response caching, and webhook queues",
+        },
+      },
+    ],
     metrics: [
       { label: { id: "Latensi API", en: "API Latency" }, value: "< 85ms" },
       { label: { id: "Lighthouse", en: "Lighthouse" }, value: "98 / 100" },
@@ -98,51 +128,81 @@ export const dummyProjects: ProjectItem[] = [
     mockupVariant: "veloce-commerce",
     title: "Veloce Atelier",
     tagline: {
-      id: "Headless e-commerce dengan konfigurator produk 3D interaktif.",
-      en: "Headless e-commerce storefront with interactive 3D customization.",
+      id: "Toko online produk custom dengan pratinjau 3D dan checkout Payment Gateway.",
+      en: "Custom product storefront with 3D preview and Payment Gateway checkout.",
     },
     summary: {
-      id: "Etalase e-commerce modern untuk produk custom yang memadukan katalog cepat, pratinjau 3D real-time, dan checkout Payment Gateway terintegrasi.",
-      en: "A modern storefront for bespoke gear combining fast catalog filtering, real-time 3D material previews, and Payment Gateway checkout.",
+      id: "Web e-commerce untuk produk custom yang menggabungkan katalog cepat, kustomisasi material 3D, dan pembayaran online otomatis.",
+      en: "An e-commerce storefront for custom goods combining fast catalog filters, 3D material previews, and automated online payments.",
     },
     overview: {
-      id: "Veloce Atelier dirancang sebagai etalase digital generasi baru: pembeli memutar produk dalam 3D, memilih material secara langsung, lalu menyelesaikan pembayaran otomatis dengan sinkronisasi stok real-time.",
-      en: "Veloce Atelier is crafted as a next-generation storefront: shoppers inspect objects in 3D, swap finishes in real time, and complete automated payments backed by live inventory locking.",
+      id: "Veloce Atelier memudahkan pembeli melihat variasi bahan dan warna produk custom secara 3D sebelum memesan, lalu langsung menyelesaikan pembayaran lewat Virtual Account, QRIS, atau kartu dengan stok yang otomatis terkunci.",
+      en: "Veloce Atelier lets shoppers inspect custom finishes in 3D before ordering, then check out via Virtual Account, QRIS, or card with live stock locking.",
     },
     problem: {
-      id: "Foto produk statis gagal memvisualisasikan variasi material custom, sehingga tingkat konversi rendah dan sering terjadi ketidakcocokan ekspektasi.",
-      en: "Static product imagery failed to convey custom material finishes, resulting in hesitant buyers and avoidable order returns.",
+      id: "Foto produk biasa sering membuat pembeli ragu saat memilih varian warna atau material custom, sehingga banyak yang batal checkout atau barang tidak sesuai ekspektasi.",
+      en: "Standard static photos made buyers hesitate when picking custom finishes, leading to dropped carts and mismatched orders.",
     },
     solution: {
-      id: "Mengintegrasikan konfigurator Three.js ringan di sisi klien sambil menjaga halaman katalog tetap SSR/SEO-friendly, dipadukan dengan Laravel REST API idempoten.",
-      en: "Integrated a lightweight client-side Three.js configurator while keeping catalog routes fully SSR and SEO-indexed, backed by an idempotent Laravel checkout API.",
+      id: "Memasang pratinjau 3D ringan berbasis Three.js di halaman produk tanpa mengorbankan kecepatan katalog SSR, lalu menghubungkannya ke Laravel REST API dengan verifikasi webhook pembayaran.",
+      en: "Added a lightweight Three.js preview on product pages while keeping catalog routes fast and SSR-indexed, backed by a Laravel checkout API with verified payment webhooks.",
     },
     features: {
       id: [
-        "Konfigurator produk 3D interaktif dengan pergantian material instan",
-        "Integrasi Payment Gateway otomatis (VA, QRIS, Kartu)",
-        "Katalog dinamis SSR dengan filter multi-atribut instan",
-        "Manajemen pesanan, penguncian stok live, dan pelacakan kirim",
+        "Pratinjau produk 3D interaktif dengan pilihan material dan warna",
+        "Pembayaran otomatis via Payment Gateway (VA, QRIS, Kartu)",
+        "Katalog produk SSR dengan filter multi-kategori yang cepat",
+        "Pengelolaan pesanan, penguncian stok real-time, dan status kirim",
       ],
       en: [
-        "Interactive 3D product configurator with instant finish swaps",
+        "Interactive 3D product preview with instant material swaps",
         "Automated Payment Gateway checkout (VA, QRIS, Cards)",
-        "SSR-indexed catalog with instant multi-facet filtering",
-        "Order lifecycle management, live stock locking, and tracking",
+        "SSR-indexed catalog with fast multi-attribute filtering",
+        "Order management, live stock locking, and shipment tracking",
       ],
     },
     architectureNotes: {
-      id: "Next.js + Three.js storefront, Laravel REST API backend, MySQL relational SKU/order schema, serta verifikasi tanda tangan kriptografis pada webhook pembayaran.",
-      en: "Next.js + Three.js storefront, Laravel REST API backend, MySQL relational SKU/order schema, and cryptographic signature verification on payment webhooks.",
+      id: "Frontend Next.js + Three.js, backend REST API Laravel, skema SKU & pesanan di MySQL, dilengkapi validasi signature pada callback Payment Gateway.",
+      en: "Next.js + Three.js storefront, Laravel REST API backend, MySQL relational SKU and order tables, and signature validation on payment webhooks.",
     },
     role: {
-      id: "Fullstack Web Developer",
-      en: "Fullstack Web Developer",
+      id: "Full-Stack Web Developer",
+      en: "Full-Stack Web Developer",
     },
     techStack: ["Next.js", "Three.js", "Laravel", "MySQL"],
+    stackRoles: [
+      {
+        name: "Next.js",
+        role: {
+          id: "Halaman katalog SSR ramah SEO dengan filter produk cepat",
+          en: "SEO-friendly SSR catalog pages with fast product filtering",
+        },
+      },
+      {
+        name: "Three.js",
+        role: {
+          id: "Pratinjau material 3D ringan yang otomatis berhenti saat idle",
+          en: "Lightweight 3D material preview that pauses when idle",
+        },
+      },
+      {
+        name: "Laravel",
+        role: {
+          id: "REST API transaksi, stok, dan verifikasi webhook Payment Gateway",
+          en: "Checkout REST API, stock handling, and Payment Gateway webhooks",
+        },
+      },
+      {
+        name: "MySQL",
+        role: {
+          id: "Data varian SKU custom, penguncian stok, dan catatan pesanan",
+          en: "Custom SKU variants, live stock locks, and order records",
+        },
+      },
+    ],
     metrics: [
       { label: { id: "First Load", en: "First Load" }, value: "0.9s" },
-      { label: { id: "Alur Checkout", en: "Checkout" }, value: "3 Steps" },
+      { label: { id: "Langkah Bayar", en: "Checkout" }, value: "3 Steps" },
       { label: { id: "Skor SEO", en: "SEO Audit" }, value: "100 / 100" },
     ],
     demoUrl: "https://veloce-demo.danucs.com",
@@ -158,8 +218,8 @@ export const dummyProjects: ProjectItem[] = [
     year: "2025",
     category: "devops",
     categoryLabel: {
-      id: "Cloud Infrastructure",
-      en: "Cloud Infrastructure",
+      id: "Server & DevOps",
+      en: "Server & DevOps",
     },
     tone: {
       surface: "#E4E5E2",
@@ -169,51 +229,81 @@ export const dummyProjects: ProjectItem[] = [
     mockupVariant: "nusantara-cloud",
     title: "Nusantara Cloud",
     tagline: {
-      id: "Observabilitas server VPS, kontainer Docker, dan kontrol CI/CD.",
-      en: "Unified VPS telemetry, Docker container control, and CI/CD hub.",
+      id: "Dasbor pemantauan server VPS, kontainer Docker, dan riwayat deployment.",
+      en: "Dashboard for VPS monitoring, Docker containers, and deployment history.",
     },
     summary: {
-      id: "Aplikasi web untuk memantau kesehatan klaster Linux/VPS secara real-time, melihat log deployment CI/CD, dan mengatur kebijakan firewall.",
-      en: "A web platform for monitoring Linux/VPS cluster health in real time, inspecting CI/CD rollout logs, and managing node firewall rules.",
+      id: "Aplikasi web untuk memantau kondisi server Linux/VPS secara langsung, mengecek log CI/CD, dan mengatur aturan firewall per node.",
+      en: "Web dashboard for tracking Linux/VPS health in real time, reading CI/CD rollout logs, and reviewing node firewall rules.",
     },
     overview: {
-      id: "Nusantara Cloud menyatukan observabilitas server dan kendali deployment dalam satu antarmuka web modern — memudahkan tim mendeteksi anomali dan melakukan rollback rilis dalam satu klik.",
-      en: "Nusantara Cloud unifies server observability and deployment controls in one clean interface — helping engineering teams spot anomalies early and execute one-click rollbacks.",
+      id: "Nusantara Cloud mengumpulkan pantauan CPU, memori, status Docker, dan log deployment ke satu panel web supaya proses cek gangguan atau rollback versi lama bisa dilakukan cepat tanpa membuka banyak sesi SSH.",
+      en: "Nusantara Cloud brings CPU, memory, Docker container states, and deployment logs into one panel so teams can diagnose issues or trigger rollbacks without juggling SSH tabs.",
     },
     problem: {
-      id: "Engineer harus berpindah antar SSH terminal, dasbor kontainer, dan log CI/CD terpisah ketika terjadi insiden produksi.",
-      en: "Engineers had to juggle SSH sessions, container consoles, and disconnected CI/CD logs whenever production incidents occurred.",
+      id: "Saat layanan bermasalah di produksi, tim biasanya harus pindah-pindah antara terminal SSH, log Docker, dan riwayat CI/CD yang terpisah sehingga penanganan jadi lambat.",
+      en: "During production issues, jumping between SSH terminals, Docker consoles, and CI/CD logs slowed down root-cause checks and recovery.",
     },
     solution: {
-      id: "Merancang agen metrik ringan yang mengirim telemetri ke backend API dan menampilkannya dalam grafik berlatensi rendah lengkap dengan alert otomatis.",
-      en: "Engineered a lightweight telemetry pipeline feeding live server metrics into a unified dashboard with instant alerts and one-click rollback triggers.",
+      id: "Membuat agen pengumpul metrik ringan yang mengirim data ke backend Laravel secara berkala, lalu menampilkannya di antarmuka React lengkap dengan notifikasi anomali dan tombol rollback.",
+      en: "Built a lightweight metrics agent feeding live server stats into a Laravel API and React dashboard with anomaly alerts and one-click rollbacks.",
     },
     features: {
       id: [
-        "Telemetri server real-time (CPU, Memori, Disk I/O, Jaringan)",
-        "Kendali kontainer Docker (Start, Restart, Live Logs)",
-        "Linimasa deployment CI/CD dengan One-Click Rollback",
-        "Peringatan anomali otomatis dan ringkasan firewall node",
+        "Pantauan metrik server langsung (CPU, RAM, Disk I/O, dan trafik jaringan)",
+        "Kontrol kontainer Docker (Start, Restart, dan baca log langsung)",
+        "Riwayat deployment CI/CD dilengkapi tombol rollback cepat",
+        "Notifikasi beban tinggi dan ringkasan aturan firewall tiap server",
       ],
       en: [
-        "Real-time server telemetry (CPU, Memory, Disk I/O, Network)",
-        "Docker container controls (Start, Restart, Live Log Stream)",
-        "CI/CD deployment timeline with One-Click Rollback",
-        "Automated anomaly alerting and node firewall policy overview",
+        "Live server telemetry (CPU, Memory, Disk I/O, Network)",
+        "Docker container actions (Start, Restart, Live Log Stream)",
+        "CI/CD deployment history with quick rollback triggers",
+        "High-load alerting and per-node firewall rule overview",
       ],
     },
     architectureNotes: {
-      id: "React + TypeScript dashboard, Laravel API & Queue Worker, integrasi Docker Engine API, serta penyimpanan histori metrik di PostgreSQL.",
-      en: "React + TypeScript dashboard, Laravel API & Queue Workers, Docker Engine API integration, and time-indexed metric persistence in PostgreSQL.",
+      id: "Antarmuka React + TypeScript, API dan Queue Worker berbasis Laravel, terhubung ke Docker Engine API dengan penyimpanan histori metrik di PostgreSQL.",
+      en: "React + TypeScript frontend, Laravel API & Queue Workers, Docker Engine API integration, and time-indexed metrics stored in PostgreSQL.",
     },
     role: {
-      id: "Fullstack & DevOps",
-      en: "Fullstack & DevOps",
+      id: "Full-Stack & DevOps",
+      en: "Full-Stack & DevOps",
     },
     techStack: ["React", "Laravel", "Docker", "PostgreSQL"],
+    stackRoles: [
+      {
+        name: "React",
+        role: {
+          id: "Tampilan grafik metrik langsung dan pembaca log kontainer",
+          en: "Live telemetry charts and real-time container log viewer",
+        },
+      },
+      {
+        name: "Laravel",
+        role: {
+          id: "API gateway, worker notifikasi gangguan, dan pemicu rollback",
+          en: "API gateway, alert queue workers, and rollback execution",
+        },
+      },
+      {
+        name: "Docker",
+        role: {
+          id: "Pengelolaan kontainer langsung melalui Docker Engine API",
+          en: "Direct container lifecycle actions via Docker Engine API",
+        },
+      },
+      {
+        name: "PostgreSQL",
+        role: {
+          id: "Menyimpan riwayat metrik server dan catatan aturan firewall",
+          en: "Time-indexed metric logs and firewall rule audit records",
+        },
+      },
+    ],
     metrics: [
-      { label: { id: "Interval Tick", en: "Telemetry" }, value: "500ms" },
-      { label: { id: "Klaster Node", en: "Nodes" }, value: "24 VMs" },
+      { label: { id: "Interval Data", en: "Telemetry" }, value: "500ms" },
+      { label: { id: "Jumlah Node", en: "Nodes" }, value: "24 VMs" },
       { label: { id: "Rollback", en: "Rollback" }, value: "< 12s" },
     ],
     demoUrl: "https://cloud-demo.danucs.com",
@@ -229,8 +319,8 @@ export const dummyProjects: ProjectItem[] = [
     year: "2025",
     category: "creative",
     categoryLabel: {
-      id: "Creative Direction",
-      en: "Creative Direction",
+      id: "Frontend & Motion",
+      en: "Frontend & Motion",
     },
     tone: {
       surface: "#ECEAE3",
@@ -240,48 +330,78 @@ export const dummyProjects: ProjectItem[] = [
     mockupVariant: "kinetix-studio",
     title: "Kinetix Digital",
     tagline: {
-      id: "Pameran studio kreatif dengan tipografi kinetik & gerak sinematis.",
-      en: "Editorial studio showcase crafted with kinetic motion and precision.",
+      id: "Website profil studio dengan tipografi besar, animasi scroll halus, dan tetap ringan.",
+      en: "Studio website built with large typography, smooth scroll motion, and fast load times.",
     },
     summary: {
-      id: "Web interaktif berstandar galeri yang menonjolkan tipografi editorial, transisi halaman mulus, dan gerak berkecepatan 60–120 FPS.",
-      en: "A gallery-grade interactive showcase featuring kinetic editorial typography, fluid route transitions, and 60–120 FPS motion.",
+      id: "Web profil interaktif yang menggabungkan tata letak bersih, transisi halaman halus, dan struktur SSR agar tetap cepat di perangkat mobile.",
+      en: "An interactive studio site pairing clean layout and smooth page transitions with SSR structure for fast mobile loads.",
     },
     overview: {
-      id: "Kinetix Digital dibangun untuk menunjukkan bagaimana narasi visual, koreografi gerak halus, dan performa SEO dapat berjalan beriringan tanpa mengorbankan kecepatan muat di mobile.",
-      en: "Kinetix Digital demonstrates how bold visual storytelling, choreographed motion, and technical SEO coexist seamlessly without compromising mobile performance.",
+      id: "Kinetix Digital dirancang untuk membuktikan bahwa halaman dengan animasi interaktif dan transisi halaman tidak harus mengorbankan skor performa maupun keterbacaan di Google Search.",
+      en: "Kinetix Digital was built to keep rich interactive transitions and smooth scrolling fast on mobile without hurting Core Web Vitals or search indexing.",
     },
     problem: {
-      id: "Situs agensi kreatif kerap mengorbankan SEO dan kinerja perangkat ringan demi animasi berat yang membuat pengunjung cepat pergi.",
-      en: "Creative studio websites often sacrifice search indexing and mid-tier device smoothness in pursuit of heavy animations.",
+      id: "Banyak website portofolio dan agensi memakai animasi berat yang membuat browser terasa patah-patah di HP dan sulit diindeks mesin pencari.",
+      en: "Many portfolio and agency websites rely on heavy scripts that lag on mid-range phones and hide content from search crawlers.",
     },
     solution: {
-      id: "Memisahkan konten SSR terindeks Google dari koreografi berbasis transform GPU murni dan degradasi adaptif untuk perangkat sentuh.",
-      en: "Separated fully indexed SSR semantic markup from GPU transform-only choreography with adaptive touch optimization.",
+      id: "Memastikan seluruh teks dirender utuh via SSR untuk SEO, lalu membatasi animasi hanya pada properti transform GPU dan menyesuaikan efeknya di layar sentuh.",
+      en: "Kept all copy rendered cleanly via SSR for crawlers, limited animations strictly to GPU transforms, and adapted interactions cleanly for touch screens.",
     },
     features: {
       id: [
-        "Tipografi kinetik split-mask tersinkronisasi kecepatan scroll",
-        "Transisi tirai antar halaman mulus tanpa jeda",
-        "Tata letak majalah editorial dengan ruang kosong presisi",
-        "Arsitektur SSR ramah SEO dengan skor Core Web Vitals hijau",
+        "Animasi teks yang bergerak sinkron dengan guliran halaman",
+        "Transisi perpindahan halaman yang halus tanpa jeda kasar",
+        "Tata letak responsif yang tetap rapi di layar besar maupun kecil",
+        "Render SSR ramah SEO dengan skor performa hijau",
       ],
       en: [
-        "Split-mask kinetic typography synchronized to scroll momentum",
-        "Seamless monochrome curtain transitions between case studies",
-        "Editorial magazine layout with disciplined negative space",
-        "SEO-first SSR architecture maintaining green Core Web Vitals",
+        "Scroll-linked text reveals running smoothly at 60 FPS",
+        "Fluid page transitions without jarring layout jumps",
+        "Responsive editorial layout across desktop and mobile",
+        "SEO-friendly SSR markup keeping Core Web Vitals green",
       ],
     },
     architectureNotes: {
-      id: "Next.js App Router, Lenis Smooth Scroll, Three.js, dan optimasi font bebas pergeseran tata letak (zero-CLS) melalui next/font.",
-      en: "Next.js App Router, Lenis Smooth Scroll, Three.js, and zero-CLS typography through next/font.",
+      id: "Menggunakan Next.js App Router, Lenis Smooth Scroll, Three.js dengan pause otomatis saat tidak aktif, serta pemuatan font bebas geser (zero-CLS).",
+      en: "Built with Next.js App Router, Lenis Smooth Scroll, Three.js with automatic idle pausing, and zero-CLS font loading via next/font.",
     },
     role: {
-      id: "Creative Frontend",
-      en: "Creative Frontend",
+      id: "Frontend Developer",
+      en: "Frontend Developer",
     },
     techStack: ["Next.js", "Three.js", "Lenis", "TypeScript"],
+    stackRoles: [
+      {
+        name: "Next.js",
+        role: {
+          id: "Pre-rendering halaman SSR penuh dan optimasi font bebas CLS",
+          en: "Full SSR pre-rendering and zero-CLS font optimization",
+        },
+      },
+      {
+        name: "Three.js",
+        role: {
+          id: "Elemen visual GPU ringan yang otomatis tidur saat keluar layar",
+          en: "Lightweight GPU visuals that sleep automatically off-screen",
+        },
+      },
+      {
+        name: "Lenis",
+        role: {
+          id: "Scroll halus 60–120 FPS tersinkron dengan animasi halaman",
+          en: "Smooth 60–120 FPS scrolling synced with page motion",
+        },
+      },
+      {
+        name: "TypeScript",
+        role: {
+          id: "Pengelolaan komponen UI dan state animasi yang terstruktur",
+          en: "Structured UI components and typed animation state",
+        },
+      },
+    ],
     metrics: [
       { label: { id: "Frame Rate", en: "Frame Rate" }, value: "60 FPS" },
       { label: { id: "Layout Shift", en: "CLS" }, value: "0.00" },
@@ -300,8 +420,8 @@ export const dummyProjects: ProjectItem[] = [
     year: "2025",
     category: "web-app",
     categoryLabel: {
-      id: "FinTech Platform",
-      en: "FinTech Platform",
+      id: "Aplikasi Keuangan",
+      en: "Finance Web App",
     },
     tone: {
       surface: "#E5E5E1",
@@ -311,48 +431,78 @@ export const dummyProjects: ProjectItem[] = [
     mockupVariant: "finpulse-treasury",
     title: "FinPulse Treasury",
     tagline: {
-      id: "Manajemen arus kas, invoice otomatis, dan rekonsiliasi pembayaran.",
-      en: "Cashflow management, automated invoicing, and payment reconciliation.",
+      id: "Aplikasi pencatatan arus kas, invoice otomatis, dan rekonsiliasi pembayaran.",
+      en: "Cashflow tracking, automated invoicing, and payment reconciliation app.",
     },
     summary: {
-      id: "Platform keuangan bisnis berbasis web untuk memantau arus kas lintas rekening, membuat tautan tagihan otomatis, dan mengekspor laporan audit instan.",
-      en: "A business finance web app for tracking multi-account cashflow, generating automated invoice links, and exporting audit-ready reports.",
+      id: "Aplikasi web keuangan bisnis untuk memantau pemasukan-pengeluaran lintas akun, membuat link tagihan otomatis, dan mengekspor laporan PDF/CSV.",
+      en: "A business finance web app for tracking multi-account cashflow, generating payment links, and exporting PDF/CSV reports.",
     },
     overview: {
-      id: "FinPulse Treasury membantu bisnis digital menyederhanakan pencatatan transaksi, verifikasi pembayaran otomatis, dan proyeksi arus kas bulanan dalam antarmuka bebas distraksi.",
-      en: "FinPulse Treasury helps digital businesses streamline transaction ledgers, automated payment reconciliation, and monthly cashflow forecasting inside a distraction-free workspace.",
+      id: "FinPulse Treasury dibuat untuk menggantikan pencatatan manual di spreadsheet: setiap invoice yang dibayar langsung terverifikasi otomatis lewat webhook dan tercatat rapi ke buku besar transaksi.",
+      en: "FinPulse Treasury replaces manual spreadsheet tracking: paid invoices are verified automatically via webhooks and recorded directly into a clean transaction ledger.",
     },
     problem: {
-      id: "Rekonsiliasi pembayaran manual lewat spreadsheet rawan selisih angka, lambat, dan menyulitkan pemantauan arus kas real-time.",
-      en: "Manual payment reconciliation across spreadsheets was error-prone, slow, and obscured live cashflow visibility.",
+      id: "Mencocokkan mutasi pembayaran satu per satu di spreadsheet memakan waktu, rawan salah hitung, dan membuat posisi kas sulit dilihat secara real-time.",
+      en: "Reconciling payments manually in spreadsheets took hours, invited calculation errors, and hid live cashflow balances.",
     },
     solution: {
-      id: "Membangun ledger double-entry berbasis transaksi ACID, webhook Payment Gateway otomatis, serta analitik periode interaktif.",
-      en: "Engineered an ACID-compliant double-entry ledger paired with automated Payment Gateway webhook reconciliation and clean period analytics.",
+      id: "Membangun pencatatan double-entry berbasis transaksi ACID di PostgreSQL, webhook Payment Gateway otomatis, serta fitur filter laporan per periode.",
+      en: "Implemented an ACID double-entry ledger in PostgreSQL paired with automated Payment Gateway webhook updates and period reporting.",
     },
     features: {
       id: [
-        "Generator invoice & tautan pembayaran otomatis dengan status live",
-        "Buku besar transaksi (Audit Trail) dengan ekspor PDF/CSV",
-        "Proyeksi arus kas bulanan yang jernih dan dapat difilter",
-        "Kontrol akses berbasis peran untuk tim keuangan",
+        "Pembuatan invoice dan tautan pembayaran dengan status ter-update otomatis",
+        "Buku besar transaksi dengan pencarian cepat dan ekspor PDF/CSV",
+        "Ringkasan arus kas bulanan yang mudah difilter per akun",
+        "Pengaturan hak akses pengguna untuk admin dan tim keuangan",
       ],
       en: [
-        "Automated invoice & payment link generator with live status",
-        "Searchable audit transaction ledger with instant PDF/CSV export",
-        "Clear filterable monthly cashflow forecasting",
-        "Granular role-based access control for finance teams",
+        "Automated invoice and payment link generator with live status updates",
+        "Searchable audit transaction ledger with PDF/CSV export",
+        "Monthly cashflow summaries filterable by account and period",
+        "Role-based access controls for admins and finance staff",
       ],
     },
     architectureNotes: {
-      id: "Vue.js & Next.js frontend, Laravel REST API dengan transaction locking PostgreSQL, serta background job notifikasi tagihan.",
-      en: "Modern reactive frontend, Laravel REST API with PostgreSQL transactional locks, and queued invoice notification workers.",
+      id: "Frontend Vue.js, backend Laravel REST API dengan transaction locking di PostgreSQL, dan background worker untuk pengiriman notifikasi tagihan.",
+      en: "Vue.js frontend, Laravel REST API with PostgreSQL transaction locking, and queued workers for invoice reminders.",
     },
     role: {
-      id: "Fullstack Web Developer",
-      en: "Fullstack Web Developer",
+      id: "Full-Stack Web Developer",
+      en: "Full-Stack Web Developer",
     },
     techStack: ["Vue.js", "Laravel", "PostgreSQL", "Docker"],
+    stackRoles: [
+      {
+        name: "Vue.js",
+        role: {
+          id: "Dasbor arus kas, filter transaksi, dan form pembuatan invoice",
+          en: "Cashflow dashboard, transaction filters, and invoice builder",
+        },
+      },
+      {
+        name: "Laravel",
+        role: {
+          id: "API pembukuan double-entry, webhook bayar, dan antrean notifikasi",
+          en: "Double-entry ledger API, payment webhooks, and queued alerts",
+        },
+      },
+      {
+        name: "PostgreSQL",
+        role: {
+          id: "Penguncian transaksi ACID untuk mencegah selisih pencatatan saldo",
+          en: "ACID transaction locking to prevent balance discrepancies",
+        },
+      },
+      {
+        name: "Docker",
+        role: {
+          id: "Lingkungan produksi konsisten untuk API dan worker ekspor laporan",
+          en: "Consistent production runtime for API and report export workers",
+        },
+      },
+    ],
     metrics: [
       { label: { id: "Rekonsiliasi", en: "Reconciliation" }, value: "Real-Time" },
       { label: { id: "Integritas", en: "Ledger" }, value: "ACID 100%" },
